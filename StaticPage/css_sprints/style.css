@@ -1,0 +1,25 @@
+.icon{
+    background-image: url("http://chittagongit.com/images/icon-sprite/icon-sprite-16.jpg");
+    display: block;
+    width: 30px;
+    height: 30px;
+}
+
+.twitter{
+    background-position: -10px -10px;
+}
+
+.facebook{
+    background-position: -60px -10px;
+}
+
+.box{
+    /* 从页面消失，节点不见 */
+    display: none;
+    /* 整体透明，不可见 */
+    opacity: 0;
+     /* 看不见，实际仍然存在页面上  */
+    visibility: hidden;
+    /* 仅仅是背景透明 */
+    background: rgba(0, 0, 0, 0)
+}

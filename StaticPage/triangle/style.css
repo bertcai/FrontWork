@@ -1,0 +1,54 @@
+div {
+    width: 0;
+    height: 0;
+    margin-top: 20px;
+}
+
+.style1 {
+    border-top: 40px solid blue;
+    border-bottom: 40px solid green;
+    border-left: 40px solid red;
+    border-right: 40px solid yellow
+}
+
+.style2 {
+    border-top: 40px solid blue;
+    border-bottom: 40px solid transparent;
+    border-left: 40px solid transparent;
+    border-right: 40px solid transparent
+}
+
+.style3 {
+    border-top: 40px solid transparent;
+    border-bottom: 40px solid transparent;
+    border-left: 40px solid red;
+    border-right: 40px solid transparent
+}
+
+.style4 {
+    border-top: 40px solid transparent;
+    border-bottom: 40px solid transparent;
+    border-left: 40px solid transparent;
+    border-right: 40px solid yellow
+}
+
+.style5 {
+    border-top: 40px solid transparent;
+    border-bottom: 40px solid green;
+    border-left: 40px solid transparent;
+    border-right: 40px solid transparent
+}
+
+.style6 {
+    border-top: 40px solid transparent;
+    border-bottom: 40px solid red;
+    border-left: 40px solid red;
+    border-right: 40px solid transparent
+}
+
+.style7 {
+    border-top: 40px solid transparent;
+    border-bottom: 40px solid green;
+    border-left: 40px solid transparent;
+    border-right: 40px solid green
+}
