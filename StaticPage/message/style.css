@@ -1,0 +1,51 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.main {
+    width: 600px;
+    margin: 40px auto 0;
+}
+
+.main .message {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    color: white;
+    position: relative;
+    border-radius: 5px;
+}
+
+.main .message span {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+}
+
+.main .message h3 {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 10px 0;
+}
+
+.main .message p {
+    margin: 16px 0;
+}
+
+.success {
+    background: #4CAF50;
+}
+
+.info {
+    background: #2196F3;
+}
+
+.danger {
+    background: #f44336;
+}
+
+.warning {
+    background: #ff9800;
+}
