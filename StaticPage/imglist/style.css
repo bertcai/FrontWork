@@ -1,0 +1,53 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    color: #666666;
+    text-align: center;
+    padding-bottom: 10px;
+
+}
+
+.main {
+    border-top: 1px solid #ccc;
+    padding-top: 10px;
+    width: 800px;
+    margin: 20px auto 0;
+}
+
+.clearfix::after {
+    content: "";
+    display: block;
+    clear: both;
+}
+
+.main .card-box {
+    margin-left: -10px;
+}
+
+.main .card-box .card {
+    float: left;
+    margin-left: 10px;
+    margin-top: 30px;
+    width: 260px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19) !important;
+}
+
+.main .card-box .card img {
+    width: 100%;
+    opacity: 0.75;
+}
+
+.main .card-box .card .desc {
+    text-align: center;
+    padding: 1px 16px;
+}
+
+.main .card-box .card .desc p {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    margin: 16px 0;
+}
