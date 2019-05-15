@@ -1,0 +1,19 @@
+.aside {
+    width: 200px;
+    height: 500px;
+    background: red;
+    float: left;
+}
+
+.ad {
+    width: 200px;
+    height: 500px;
+    background: yellow;
+    float: right;
+}
+
+.main {
+    height: 700px;
+    margin:0 210px;
+    background: blue;
+}

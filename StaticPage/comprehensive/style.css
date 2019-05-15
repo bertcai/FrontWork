@@ -1,0 +1,435 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+ul {
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+    color: white;
+}
+
+.button {
+    opacity: 0.8;
+    border: 1px solid #12f3f6;
+    padding: 7px 40px;
+    display: inline-block;
+    min-width: 100px;
+    text-align: center;
+    font-size: 1vw;
+    background: rgba(0, 0, 0, 0.7);
+}
+
+.button:hover {
+    border-image: linear-gradient(60deg, #12f3f6 30%, #ff0d29 70%);
+    border-image-slice: 10;
+    opacity: 1;
+}
+
+.clearfix::after {
+    content: "";
+    display: block;
+    clear: both;
+}
+
+.detail p {
+    font-size: 1vw;
+    line-height: 2;
+}
+
+body {
+    width: 100%;
+    min-width: 1425px;
+    background: #000000;
+    color: white;
+    text-align: center;
+}
+
+header {
+    margin-bottom: 150px;
+}
+
+header nav {
+    height: 35px;
+    padding: 15px 50px;
+}
+
+header nav .logo {
+    float: left;
+    display: block;
+    height: 35px;
+}
+
+header nav .logo img {
+    height: 100%;
+}
+
+header nav .buy {
+    float: right;
+    background-image: linear-gradient(90deg, #860404 0%, #c51212 100%);
+    cursor: pointer;
+    height: 100%;
+    width: 100px;
+    text-align: center;
+    line-height: 35px;
+    margin-left: 100px;
+    opacity: 0.9;
+}
+
+header nav .buy:hover {
+    opacity: 1;
+}
+
+header nav ul {
+    float: right;
+}
+
+header nav ul li {
+    float: left;
+    margin-left: 50px;
+}
+
+header nav ul li a {
+    display: block;
+    padding: 0 15px;
+    font-size: 18px;
+    font-weight: blod;
+    line-height: 35px;
+}
+
+header nav ul li a:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+header .desc {
+    width: 50%;
+    margin: 0 auto;
+}
+
+header .desc .banner {
+    width: 100%;
+    display: block;
+    margin-bottom: 20px;
+}
+
+header .desc .platform {
+    width: fit-content;
+    margin: 0 auto;
+    margin-bottom: 20px;
+}
+
+header .desc .platform img {
+    display: block;
+    float: left;
+    height: 27px;
+    margin-left: 30px;
+}
+
+header .desc h2 {
+    font-size: 35px;
+    line-height: 1.6;
+    margin-bottom: 20px;
+    font-family: "Roboto", sans-serif;
+}
+
+main section {
+    position: relative;
+    width: 100%;
+    min-height: 65vw;
+}
+
+main section .content {
+    position: absolute;
+    left: 8%;
+    width: 80%;
+    top: 50%;
+    transform: translate(0, -50%);
+    text-align: left;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 30px;
+}
+
+main section .content h2 {
+    letter-spacing: -2px;
+    font-size: 7vw;
+    font-weight: bold;
+    text-shadow: 0 0 16px #000;
+    font-family: 'Cormorant Garamond', serif;
+}
+
+main section .content .info {
+    display: inline-block;
+    line-height: 1.6;
+    font-size: 2.5vw;
+    padding: 0 10px;
+    background: #000;
+    font-family: 'Cormorant Garamond', serif;
+    margin-bottom: 10px;
+}
+
+main section .content .button {
+    margin-top: 50px;
+}
+
+main section .content .card-box {
+    width: 90%;
+    margin: 0 auto;
+}
+
+main section .content .card-box .card {
+    float: left;
+    width: calc(33% - 10px);
+    margin-left: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    min-height: 600px;
+}
+
+main section .content .card-box .card img {
+    width: 100%;
+    display: block;
+}
+
+main section .content .card-box .card .name {
+    text-align: center;
+    font-size: 2.5vw;
+    background: #000;
+    opacity: 0.8;
+    display: block;
+}
+
+main section .content .card-box .card .name:hover {
+    opacity: 1;
+}
+
+
+main section .content .card-box .card .detail {
+    padding: 10px;
+}
+
+main section .content .timeline {
+    position: relative;
+}
+
+main section .content .timeline::before {
+    content: "";
+    display: block;
+    top: 0;
+    bottom: 0;
+    border: 1px solid lightblue;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, 0);
+}
+
+main section .content .timeline li {
+    position: relative;
+    min-height: 100px;
+}
+
+main section .content .timeline li img {
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, 0);
+    width: 100px;
+    height: 100px;
+    border-radius: 50px;
+    border: 3px solid lightblue;
+}
+
+main section .content .timeline li .panel {
+    width: 40%;
+    min-height: 100px;
+
+}
+
+main section .content .timeline li:nth-child(2n-1) .panel {
+    float: left;
+    text-align: right;
+}
+
+main section .content .timeline li:nth-child(2n) .panel {
+    float: right;
+    text-align-last: left;
+}
+
+main section .content .timeline li .panel h3 {
+    margin-bottom: 10px;
+}
+
+main section .content .timeline li .panel p {
+    font-size: 1vw;
+    line-height: 2;
+    padding: 10px;
+}
+
+main section .content .timeline li .end {
+    width: 100px;
+    height: 100px;
+    border-radius: 50px;
+    margin: 0 auto;
+    border: 3px solid lightblue;
+    text-align: center;
+    background: #222;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+main section .content .timeline li .end h4 {
+    font-size: 1.2vw;
+    line-height: 1.6;
+    vertical-align: middle;
+}
+
+main section .content form .info-box {
+    width: 90%;
+    margin: 0 auto;
+}
+
+main section .content form .info-box .userinfo {
+    width: 45%;
+    float: left;
+}
+
+main section .content form .info-box .userinfo input {
+    display: block;
+    height: 50px;
+    padding: 5px 20px;
+    width: 100%;
+    outline: none;
+    margin-bottom: 20px;
+    font-size: 1.3vw;
+    background: #000;
+    color: white;
+    border: 1px solid #000;
+}
+
+main section .content form .info-box .userinfo input:focus {
+    border-image: linear-gradient(60deg, #12f3f6 30%, #ff0d29 70%);
+    border-image-slice: 10;
+    opacity: 1;
+    border: 1px solid transparent;
+}
+
+main section .content form .info-box .message {
+    width: 45%;
+    float: right;
+}
+
+main section .content form .info-box .message textarea {
+    display: block;
+    background: #000;
+    color: white;
+    height: 50px;
+    padding: 25px;
+    width: 100%;
+    margin-bottom: 20px;
+    font-size: 1.3vw;
+    height: 176px;
+    outline: none;
+    border: 1px solid #000;
+}
+
+main section .content form .button-wrapper {
+    text-align: center;
+}
+
+
+main #about {
+    background: no-repeat url(http://www.devilmaycry5.com/assets/img/common/top/bg_about.jpg);
+    background-size: 100%;
+}
+
+main #character {
+    /* background: url(http://www.devilmaycry5.com/assets/img/common/character/BG.jpg) */
+    background: no-repeat right url(http://www.devilmaycry5.com/assets/img/common/top/v_chara.png);
+    background-size: 100%;
+}
+
+main #system {
+    background: no-repeat url(http://www.devilmaycry5.com/assets/img/common/top/bg_system.jpg);
+    background-size: 100%;
+}
+
+main #history {
+    background: no-repeat left url(https://vignette.wikia.nocookie.net/devilmaycry/images/9/9f/Nero_DMC5.png/revision/latest?cb=20181001090434);
+    /* background: #17181d; */
+    padding: 100px 0;
+}
+
+main #history .content {
+    position: static;
+    transform: translate(0, 0);
+    text-align: left;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 30px;
+    margin: 0 auto;
+}
+
+main #contact {
+    background: no-repeat left/120% url(https://i2.wp.com/timber-owls.com/wp-content/uploads/2019/03/431daae8-0e02-47ec-8aaf-bbfab198677d_PhoneBooth_Van_png_jpgcopy.jpg?fit=3840%2C2160&ssl=1);
+}
+
+footer .platform {
+    padding-top: 50px;
+    border-top: 1px solid #444;
+}
+
+footer .platform .img-box {
+    width: fit-content;
+    margin: 0 auto;
+    margin-bottom: 20px;
+
+}
+
+footer .platform .img-box img {
+    display: block;
+    float: left;
+    height: 27px;
+    margin-left: 10px;
+}
+
+footer .platform .detail {
+    width: 60%;
+    margin: 0 auto;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+footer .platform .detail p {
+    font-size: 0.8vw;
+    color: #666;
+}
+
+footer .platform .detail p::selection {
+    color: #fff;
+}
+
+footer .company {
+    padding-top: 50px;
+    border-top: 1px solid #444;
+}
+
+footer .company .company-logo {
+    margin-bottom: 20px;
+}
+
+footer .company .company-logo img {
+    width: 106px;
+    height: 20px;
+}
+
+footer .company .copy {
+    font-size: 0.8vw;
+    color: #666;
+}
+
+footer .company .copy::selection {
+    color: #fff;
+}

@@ -49,5 +49,5 @@ h1 {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    margin: 16px 0;
+    margin: 16px 0  ;
 }

@@ -1,0 +1,58 @@
+.container {
+    margin: 60px auto;
+    width: 600px;
+    height: 300px;
+    overflow: hidden;
+    position: relative;
+}
+
+.container .box {
+    border: 1px solid #cccccc;
+    position: relative;
+    width: 400px;
+    height: 150px;
+    margin: 0 auto 30px;
+}
+
+.container .gray-tgl::before {
+    content: "";
+    border: 15px solid transparent;
+    border-bottom: 15px solid #ccc;
+    position: absolute;
+    left: 5px;
+    top: -30px;
+}
+
+.container .red-tgl::before {
+    content: "";
+    border: 10px solid transparent;
+    border-top: 10px solid red;
+    border-right: 10px solid red;
+    position: absolute;
+    right: 0px;
+    top: 0px;
+}
+
+.container .white-tgl::before {
+    content: "";
+    width: 21px;
+    height: 21px;
+    border-top: 1px solid #ccc;
+    border-left: 1px solid #ccc;
+    transform: rotate(45deg);
+    left: 10px;
+    top: -12px;
+    display: block;
+    background: white;
+    position: absolute;
+}
+
+.container .ab {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    top: 100%;
+    left: 0;
+    border: 1px solid #ccc;
+    background: #ccc;
+}
