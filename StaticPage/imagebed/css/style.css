@@ -1,0 +1,137 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 16px;
+    line-height: 1.67;
+    color: #222;
+}
+
+:root {
+    --bg-color: #333;
+    --primary-color: #00aa3a;
+    --main-padding: 100px
+}
+
+a {
+    text-decoration: none;
+}
+
+header {
+    padding: 20px var(--main-padding);
+    background: var(--bg-color);
+    display: flex;
+}
+
+header a {
+    color: #fff;
+}
+
+header nav a {
+    margin-left: 20px;
+}
+
+header .setting {
+    margin-left: auto;
+}
+
+main {
+    padding: 0 var(--main-padding);
+}
+
+main .ct-upload {
+    max-width: 700px;
+    padding: 30px 30px;
+    margin: 60px auto 0 auto;
+    counter-reset: #666;
+    text-align: center;
+    border: 5px dashed #999;
+    border-radius: 20px;
+}
+
+main .ct-upload .icon-cloud {
+    font-size: 80px;
+}
+
+main .ct-upload p:first-of-type {
+    font-size: 22px;
+}
+
+main .ct-loading {
+    display: flex;
+    flex-direction: column;
+    margin-top: 50px;
+}
+
+main .ct-loading .view-all {
+    margin-left: auto;
+    color: var(--primary-color);
+}
+
+main .ct-loading li {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+main .ct-loading .loading {
+    display: block;
+    width: 400px;
+    height: 20px;
+    border-radius: 20px;
+    background: #f2f2f2;
+}
+
+main .ct-loading .loading i {
+    display: block;
+    width: 40%;
+    height: 100%;
+    border-radius: 20px;
+    background-color: var(--primary-color)
+}
+
+main .ct-loading .copy {
+    color: var(--primary-color);
+    cursor: pointer;
+}
+
+main .ct-pros {
+    margin-top: 50px;
+}
+
+main .ct-pros h2 {
+    font-size: 32px;
+    text-align: center;
+}
+
+main .ct-pros ul {
+    display: flex;
+    justify-content: space-between;
+    text-align: center;
+}
+
+main .ct-pros ul li {
+    width: 30%;
+}
+
+main .ct-pros ul li h3 {
+    font-size: 30px;
+}
+
+main .ct-pros ul li p {
+    text-align: left;
+    color: #767676;
+}
+
+footer {
+    margin-top: 50px;
+    background-color: var(--bg-color);
+    padding: 20px;
+    text-align: center;
+}
+
+footer a {
+    color: #fff;
+}
