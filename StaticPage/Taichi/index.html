@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=400px, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    @keyframes x {
+        from {
+            transform: rotate(0deg)
+        }
+
+        to {
+            transform: rotate(360deg)
+        }
+    }
+
+    body {
+        background: #dddddd;
+    }
+
+    .tai-chi-wrapper {
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+
+    #tai_chi {
+        /* border: 1px solid black; */
+        width: 400px;
+        height: 400px;
+        border-radius: 50%;
+        position: relative;
+        overflow: hidden;
+        animation: x 5s infinite linear;
+        box-shadow: 0px 0px 5px 3px rgba(0, 0, 0, 0.75);
+    }
+
+    #tai_chi>div:first-child {
+        width: 50%;
+        position: absolute;
+        left: 0;
+        top: 0;
+        height: 100%;
+        background: black;
+    }
+
+    #tai_chi>div:nth-child(2) {
+        width: 50%;
+        right: 0;
+        top: 0;
+        height: 100%;
+        position: absolute;
+        background: white;
+    }
+
+    #tai_chi>div:nth-child(3) {
+        background: white;
+        width: 200px;
+        height: 200px;
+        left: 50%;
+        margin-left: -100px;
+        border-radius: 50%;
+        position: absolute;
+    }
+
+    #tai_chi>div:nth-child(4) {
+        background: black;
+        width: 200px;
+        height: 200px;
+        left: 50%;
+        bottom: 0;
+        margin-left: -100px;
+        border-radius: 50%;
+        position: absolute;
+    }
+
+    #tai_chi>div:nth-child(5) {
+        background: black;
+        width: 50px;
+        height: 50px;
+        left: 50%;
+        top: 75px;
+        margin-left: -25px;
+        border-radius: 50%;
+        position: absolute;
+    }
+
+    #tai_chi>div:nth-child(6) {
+        background: white;
+        width: 50px;
+        height: 50px;
+        left: 50%;
+        bottom: 75px;
+        margin-left: -25px;
+        border-radius: 50%;
+        position: absolute;
+    }
+
+    .tai-chi-wrapper .info{
+        margin-top: 20px;
+    }
+
+    @media (max-width:500px) {
+        #tai_chi {
+            /* border: 1px solid black; */
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            position: relative;
+            overflow: hidden;
+            animation: x 5s infinite linear;
+            box-shadow: 0px 0px 5px 3px rgba(0, 0, 0, 0.75);
+        }
+
+        #tai_chi>div:first-child {
+            width: 50%;
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            background: black;
+        }
+
+        #tai_chi>div:nth-child(2) {
+            width: 50%;
+            right: 0;
+            top: 0;
+            height: 100%;
+            position: absolute;
+            background: white;
+        }
+
+        #tai_chi>div:nth-child(3) {
+            background: white;
+            width: 100px;
+            height: 100px;
+            left: 50%;
+            margin-left: -50px;
+            border-radius: 50%;
+            position: absolute;
+        }
+
+        #tai_chi>div:nth-child(4) {
+            background: black;
+            width: 100px;
+            height: 100px;
+            left: 50%;
+            bottom: 0;
+            margin-left: -50px;
+            border-radius: 50%;
+            position: absolute;
+        }
+
+        #tai_chi>div:nth-child(5) {
+            background: black;
+            width: 25px;
+            height: 25px;
+            left: 50%;
+            top: 37.5px;
+            margin-left: -12.5x;
+            border-radius: 50%;
+            position: absolute;
+        }
+
+        #tai_chi>div:nth-child(6) {
+            background: white;
+            width: 20px;
+            height: 20px;
+            left: 50%;
+            bottom: 37.5px;
+            margin-left: -12.5px;
+            border-radius: 50%;
+            position: absolute;
+        }
+    }
+</style>
+
+<body>
+    <div class="tai-chi-wrapper">
+        <div id="tai_chi">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+        <div class="info">
+            道可道，非常道
+        </div>
+    </div>
+</body>
+
+</html>
