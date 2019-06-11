@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .active {
+            background: #000000;
+            color: #ffffff;
+        }
+    </style>
+</head>
+
+<body>
+    <ul class="ct">
+        <li data-img="1.jpg">鼠标放置查看图片1</li>
+        <li data-img="2.jpg">鼠标放置查看图片2</li>
+        <li data-img="3.jpg">鼠标放置查看图片3</li>
+    </ul>
+    <div class="img-preview"></div>
+    <script>
+        //补全代码，要求：当鼠标放置在li元素上，会在img-preview里展示当前li元素的data-img对应的图片。
+        let imgPanel = document.querySelector('.img-preview')
+        let liArr = document.querySelectorAll('li')
+        let temp
+        console.log(liArr)
+        liArr.forEach(function (item) {
+            console.log(item);
+
+            item.onclick = function () {
+                let img = document.createElement('img')
+                img.src = item.getAttribute('data-img')
+                if (imgPanel.childNodes.length > 0) {
+                    imgPanel.removeChild(temp)
+                }
+                imgPanel.appendChild(img)
+                temp = img
+            }
+        })
+    </script>
+    <ul class="ct">
+        <li class="q2">这里是</li>
+        <li class="q2">饥人谷</li>
+    </ul>
+    <script>
+        // 有如下代码，要求当点击每一个元素li时控制台展示该元素的文本内容。不考虑兼容。
+        //todo ...
+        let liArr2 = document.querySelectorAll('.q2')
+        console.log(liArr2)
+        liArr2.forEach(function (item) {
+            console.log(item.innerText)
+        })
+    </script>
+    <div class="panel">
+        <h1>Devil May Cry V</h1>
+        <p>Buy Now</p>
+    </div>
+    <button class="" id="add">add</button>
+    <button id="remove">remove</button>
+    <button id="toggle1">toggle1</button>
+    <button id="toggle2">toggle2</button>
+    <script>
+        let textPanel = document.querySelector('.panel')
+        let addBtn = document.querySelector('#add')
+        let removeBtn = document.querySelector('#remove')
+        let toggleBtn1 = document.querySelector('#toggle1')
+        let toggleBtn2 = document.querySelector('#toggle2')
+        addBtn.onclick = function () {
+            textPanel.classList.add('active')
+        }
+        removeBtn.onclick = function () {
+            textPanel.classList.remove('active')
+        }
+        toggleBtn1.onclick = function () {
+            if (textPanel.classList.contains('active')) {
+                textPanel.classList.remove('active')
+            } else {
+                textPanel.classList.add('active')
+            }
+        }
+        toggleBtn2.onclick = function () {
+            textPanel.classList.toggle('active')
+        }
+    </script>
+</body>
+
+</html>
