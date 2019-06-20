@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>事件的传递和阻止事件的传递</title>
+    <style>
+        div {
+            border: 2px solid black;
+        }
+
+        .container {
+            width: 400px;
+            height: 400px;
+            margin: 40px auto 0;
+        }
+
+        .box {
+            width: 200px;
+            height: 200px;
+            margin: 40px auto 0;
+        }
+
+        .target {
+            width: 100px;
+            height: 100px;
+            margin: 40px auto 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        container
+        <div class="box">
+            box
+            <div class="target">
+                target
+            </div>
+        </div>
+    </div>
+    <script>
+        // 封装获取dom函数
+        function $(selector) {
+            return document.querySelector(selector)
+        }
+        // 捕获阶段
+        $('.container').addEventListener('click', function () {
+            console.log('container catch')
+        }, true)
+        $('.box').addEventListener('click', function (e) {
+            console.log('box catch')
+            // e.stopPropagation()
+            // console.log('stop catch')
+        }, true)
+        $('.target').addEventListener('click', function () {
+            console.log('target catch')
+        }, true)
+        // 冒泡阶段
+        $('.container').addEventListener('click', function () {
+            console.log('container bubble')
+        }, false)
+        $('.box').addEventListener('click', function () {
+            console.log('box bubble')
+        }, false)
+        $('.target').addEventListener('click', function (e) {
+            console.log('target bubble')
+            e.stopPropagation()
+            console.log('stop bubble')
+        }, false)
+    </script>
+</body>
+
+</html>

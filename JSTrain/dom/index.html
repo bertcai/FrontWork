@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <meta name="viewport" content="width=750, initial-scale=2.0"> -->
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     <style>
@@ -11,7 +11,29 @@
             background: #000000;
             color: #ffffff;
         }
+
+        div {
+            width: 500px;
+        }
     </style>
+    <script>
+
+        // 常见动态设置initial-scale的方法
+        const WIDTH = 750
+        const mobileAdapter = () => {
+            let scale = screen.width / WIDTH
+            let content = `width=${WIDTH}, initial-scale=${scale}, maximum-scale=${scale}, minimum-scale=${scale}`
+            let meta = document.querySelector('meta[name=viewport]')
+            if (!meta) {
+                meta = document.createElement('meta')
+                meta.setAttribute('name', 'viewport')
+                document.head.appendChild(meta)
+            }
+            meta.setAttribute('content', content)
+        }
+        mobileAdapter()
+        window.onorientationchange = mobileAdapter 
+    </script>
 </head>
 
 <body>
@@ -30,7 +52,7 @@
         liArr.forEach(function (item) {
             console.log(item);
 
-            item.onclick = function () {
+            item.onmouseover = function () {
                 let img = document.createElement('img')
                 img.src = item.getAttribute('data-img')
                 if (imgPanel.childNodes.length > 0) {
@@ -84,6 +106,17 @@
         toggleBtn2.onclick = function () {
             textPanel.classList.toggle('active')
         }
+    </script>
+    <script>
+        function css(node, styleObj) {
+            for (var key in styleObj) {
+                node.style[key] = styleObj[key]
+            }
+        }
+        css(document.body, {
+            'color': 'red',
+            'background-color': '#ccc'
+        })
     </script>
 </body>
 
