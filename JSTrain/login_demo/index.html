@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://kit.fontawesome.com/c7b5a4ef52.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        html,
+        body,
+        main {
+            height: 100%;
+        }
+
+        header .login {
+            float: right;
+            margin-right: 20px;
+            color: #444;
+            font-size: 20px;
+        }
+
+        main {
+            background: linear-gradient(to right top, rgba(38, 50, 105, 0.78), rgba(255, 152, 0, 0.45));
+        }
+
+        .flip-modal {
+            display: none;
+        }
+
+        .show {
+            display: block;
+        }
+
+        .flip-modal .modal {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 400px;
+            padding: 20px;
+            background: #ffffff;
+            border: 1px solid #777777;
+            box-shadow: 1px 1px 5px 1px rgba(0, 0, 0, 0.85);
+        }
+
+        .flip-modal .modal .close {
+            position: absolute;
+            right: 10px;
+            top: 10px;
+            display: block;
+            color: #444;
+        }
+
+        .flip-modal .modal .tabs {
+            width: 100%;
+            padding: 5px 0;
+            text-align: center;
+        }
+
+        .flip-modal .modal .tabs a {
+            display: inline-block;
+            font-size: 20px;
+            color: #777;
+            margin: 0 20px;
+        }
+
+        .flip-modal.login .modal .tabs .login,
+        .flip-modal.register .modal .tabs .register {
+            color: #222;
+            border-bottom: 1px solid #000;
+        }
+
+        .flip-modal .modal .content {
+            padding: 20px 40px;
+        }
+
+        .flip-modal .modal .content .err-msg {
+            font-size: 12px;
+            color: red;
+        }
+
+        .flip-modal .modal .content .input-field {
+            position: relative;
+            margin-top: 10px;
+        }
+
+        .flip-modal .modal .content .input-field .fuck {
+            position: absolute;
+            left: 10px;
+            top: 12px;
+        }
+
+        .flip-modal .modal .content .input-field input[type=text],
+        .flip-modal .modal .content .input-field input[type=password] {
+            width: 100%;
+            font-size: 16px;
+            padding: 10px 10px 10px 28px;
+            outline: none;
+        }
+
+        .flip-modal .modal .content input[type=submit] {
+            width: 60px;
+            padding: 10px;
+            border-radius: 2px;
+            margin-top: 10px;
+            outline: none;
+        }
+
+        .flip-modal.login .modal.modal-register,
+        .flip-modal.register .modal.modal-login {
+            transform: translate(-50%, -50%) rotateY(180deg);
+            backface-visibility: hidden;
+            transition: all 1s;
+        }
+
+        .flip-modal.login .modal.modal-login,
+        .flip-modal.register .modal.modal-register {
+            transform: translate(-50%, -50%) rotateY(0deg);
+            backface-visibility: hidden;
+            transition: all 1s;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <a href="#" class="login"><i class="far fa-user-circle"></i></a>
+    </header>
+    <main>
+        <div class="flip-modal login">
+            <div class="modal modal-login">
+                <a href="#" class="close fas fa-times"></a>
+                <div class="tabs">
+                    <a href="#" class="login">登陆</a>
+                    <a href="#" class="register">注册</a>
+                </div>
+                <div class="content">
+                    <div class="err-msg"></div>
+                    <form action="/login" method="post">
+                        <div class="input-field">
+                            <i class="fas fa-user fuck"></i>
+                            <input type="text" name="username" placeholder="用户名">
+                        </div>
+                        <div class="input-field">
+                            <i class="fas fa-lock fuck"></i>
+                            <input type="password" name="password" placeholder="密码">
+                        </div>
+                        <input class="l" type="submit" value="登陆">
+                    </form>
+                </div>
+            </div>
+            <div class="modal modal-register">
+                <a href="#" class="close fas fa-times"></a>
+                <div class="tabs">
+                    <a href="#" class="login">登陆</a>
+                    <a href="#" class="register">注册</a>
+                </div>
+                <div class="content">
+                    <div class="err-msg"></div>
+                    <form action="/login" method="post">
+                        <div class="input-field">
+                            <i class="fas fa-user fuck"></i>
+                            <input type="text" name="username" placeholder="用户名">
+                        </div>
+                        <div class="input-field">
+                            <i class="fas fa-lock fuck"></i>
+                            <input type="password" name="password" placeholder="密码">
+                        </div>
+                        <div class="input-field">
+                            <i class="fas fa-lock fuck"></i>
+                            <input type="password" name="password2" placeholder="确认密码">
+                        </div>
+                        <input type="submit" value="注册">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+    <script>
+        function $(selector) {
+            return document.querySelector(selector)
+        }
+        let show = $('header .login')
+        let flipModal = $('main>.flip-modal')
+        show.onclick = function (e) {
+            e.stopPropagation()
+            if (flipModal.classList.contains('show')) {
+                flipModal.classList.remove('show')
+            } else {
+                flipModal.classList.add('show')
+            }
+        }
+        flipModal.onclick = function (e) {
+            e.stopPropagation()
+            if (e.target.classList.contains('login')) {
+                flipModal.classList.add('login')
+                flipModal.classList.remove('register')
+            }
+            if (e.target.classList.contains('register')) {
+                flipModal.classList.add('register')
+                flipModal.classList.remove('login')
+            }
+            if (e.target.classList.contains('close')) {
+                $('.flip-modal').classList.remove('show')
+            }
+        }
+        document.onclick = function () {
+            flipModal.classList.remove('show')
+        }
+
+        let loginForm = $('.modal-login form')
+        let registerForm = $('.modal-register form')
+        loginForm.addEventListener('submit', function (e) {
+            e.preventDefault()
+            console.log($('.modal-login input[type=text]').value);
+            if (!/^\w{3,8}$/.test($('.modal-login input[type=text]').value)) {
+                console.log(111);
+                $('.modal-login .err-msg').innerText = '用户名必须3-8位，包含字母数字下划线'
+                return false
+            }
+            if (!/^\w{3,8}$/.test($('.modal-login input[type=password]').value)) {
+                $('.modal-login .err-msg').innerText = '密码必须3-8位，包含字母数字下划线'
+                return false
+            }
+            this.submit()
+        })
+
+        registerForm.addEventListener('submit', function (e) {
+            e.preventDefault()
+            if (!/^\w{3,8}$/.test($('.modal-register input[type=text]').value)) {
+                $('.modal-register .err-msg').innerText = '用户名必须3-8位，包含字母数字下划线'
+                return false
+            }
+            if (/^bert$/.test($('.modal-register input[type=text]').value)) {
+                $('.modal-register .err-msg').innerText = '用户名已存在'
+                return false
+            }
+            if (!/^\w{3,8}$/.test($('.modal-register input[type=password]').value)) {
+                $('.modal-register .err-msg').innerText = '密码必须3-8位，包含字母数字下划线'
+                return false
+            }
+            if ($('.modal-register input[name=password]').value !== $('.modal-register input[name=password2]').value) {
+                $('.modal-register .err-msg').innerText = '两次密码输入不一致'
+                return false
+            }
+
+            this.submit()
+        })
+    </script>
+</body>
+
+</html>

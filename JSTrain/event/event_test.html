@@ -23,30 +23,30 @@
     <button id="btn-add-start">开头添加</button>
     <button id="btn-add-end">结尾添加</button>
     <script>
-        var ipt = document.querySelector('.ipt-add-content')
-        var stBtn = document.querySelector('#btn-add-start')
-        var endBtn = document.querySelector('#btn-add-end')
-        var ct = document.querySelector('.ct')
-        stBtn.onclick = function () {
-            var str = ipt.value
-            var dom = document.createElement('li')
-            var stRef = document.querySelector('li')
-            if (str.length > 0) {
-                dom.innerText = str
-                ct.insertBefore(dom, stRef)
-            }
+    var ipt = document.querySelector('.ipt-add-content')
+    var stBtn = document.querySelector('#btn-add-start')
+    var endBtn = document.querySelector('#btn-add-end')
+    var ct = document.querySelector('.ct')
+    stBtn.onclick = function () {
+        var str = ipt.value
+        var dom = document.createElement('li')
+        var stRef = document.querySelector('li')
+        if (str.length > 0) {
+            dom.innerText = str
+            ct.insertBefore(dom, stRef)
         }
-        endBtn.onclick = function () {
-            var str = ipt.value
-            var dom = document.createElement('li')
-            if (str.length > 0) {
-                dom.innerText = str
-                ct.appendChild(dom)
-            }
+    }
+    endBtn.onclick = function () {
+        var str = ipt.value
+        var dom = document.createElement('li')
+        if (str.length > 0) {
+            dom.innerText = str
+            ct.appendChild(dom)
         }
-        ct.onclick = function (e) {
-            console.log(e.target.innerText)
-        }
+    }
+    ct.onclick = function (e) {
+        console.log(e.target.innerText)
+    }
     </script>
 </body>
 
