@@ -9,8 +9,26 @@ function isAndroid() {
     }
 }
 
-function isIphone() {}
+function isIphone() {
+    if (/iPhone/.test(nav)) {
+        return true
+    } else {
+        return false
+    }
+}
 
-function isIpad() {}
+function isIpad() {
+    if (/iPad/.test(nav)) {
+        return true
+    } else {
+        return false
+    }
+}
 
-function isIOS() {}
+function isIOS() {
+    if (/\(i[^;]+;( U;)? CPU.+Mac OS X/.test(nav)) {
+        return true
+    } else {
+        return false
+    }
+}
