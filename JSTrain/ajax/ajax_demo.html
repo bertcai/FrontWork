@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>AJAX DEMO</title>
+</head>
+
+<body>
+    <script>
+        const xhr = new XMLHttpRequest()
+        xhr.open('GET', '/ajax.json')
+        xhr.onload = function () {
+            console.log(xhr.status)
+            if ((xhr.status >= 200 && xhr.status < 300) || xhr.status === 304) {
+                console.log(xhr.responseText)
+            } else {
+                console.log('服务器异常')
+            }
+        }
+
+        xhr.send()
+
+        xhr.timeout = 3000        //可选，设置xhr请求的超时时间
+        xhr.open('POST', '/register', true)
+
+        xhr.onload = function (e) {
+            if ((xhr.status >= 200 && xhr.status < 300) || xhr.status == 304) {
+                console.log(this.responseText)
+            }
+        }
+        //可选
+        xhr.ontimeout = function (e) {
+            console.log('请求超时')
+        }
+
+        //可选
+        xhr.onerror = function (e) {
+            console.log('连接失败')
+        }
+        //可选
+        xhr.upload.onprogress = function (e) {
+            //如果是上传文件，可以获取上传进度
+        }
+
+        xhr.send('username=bert&password=123456')
+
+        // 简单封装一个ajax
+        function ajax(opts) {
+            let url = opts.url
+            let type = opts.type || 'GET'
+            let dataType = opts.dataType || 'JSON'
+            let onsuccess = opts.onsuccess || function () { }
+            let onerror = opts.onerror || function () { }
+            let data = opts.data || {}
+
+            let dataStr = []
+            for (let key in data) {
+                dataStr.push(key + '=' + data[key])
+            }
+
+            dataStr = dataStr.join('&')
+            if (type === 'GET') {
+                url = url + '?' + dataStr
+            }
+
+            let xhr = new XMLHttpRequest()
+            xhr.onload = function (e) {
+                if ((xhr.status >= 200 && xhr.status < 300) || xhr.status == 304) {
+                    if (dataType === 'JSON') {
+                        onsuccess(JSON.parse(xhr.responseText))
+                    } else {
+                        onsuccess(xhr.responseText)
+                    }
+                } else {
+                    console.log("ERROR: " + xhr.status)
+                }
+            }
+            xhr.open(type, url)
+            if (type === 'POST') {
+                xhr.send(dataStr)
+            } else {
+                xhr.send()
+            }
+            xhr.onerror = onerror
+        }
+        ajax({
+            url: 'http://api.jirengu.com/weather.php',
+            data: {
+                city: '北京'
+            },
+            onsuccess: function (ret) {
+                console.log(ret)
+            },
+            onerror: function () {
+                console.log('服务器异常')
+            }
+        })
+    </script>
+</body>
+
+</html>
