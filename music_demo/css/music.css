@@ -1,0 +1,125 @@
+* {
+    margin: 0;
+    padding: 0;
+    color: pink;
+    font-family: cursive, microsoft Yahei;
+}
+
+ul {
+    list-style: none;
+}
+
+.cover {
+    width: 100vw;
+    height: 100vh;
+    min-height: 800px;
+    min-width: 1000px;
+    background-image: url("https://pic.xiami.net/images/album/img89/836389/8363891490836389.jpg@1e_1c_100Q_185w_185h");
+    background-repeat: no-repeat;
+    background-size: cover;
+    filter: blur(5px);
+}
+
+.music-box {
+    position: absolute;
+    width: 400px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: 1px solid black;
+    background: white;
+    padding: 20px;
+}
+
+
+.music-box .music {
+    display: flex;
+    justify-content: space-between;
+}
+
+
+.music-box .music .control {
+    display: flex;
+    justify-content: space-between;
+    width: 150px;
+    float: left;
+    align-items: center;
+}
+
+.music-box .music .info {
+    width: 150px;
+}
+
+
+.music-box .music .control i {
+    color: pink;
+}
+
+.music-box .music .control span {
+    cursor: pointer;
+}
+
+.music-box .music .control span:hover i {
+    color: palevioletred;
+}
+
+
+.music-box .music .info .title {
+    font-size: 20px;
+}
+
+.music-box .music .info .author {
+    font-size: 14px;
+}
+
+.music-box .progress {
+    margin-top: 20px;
+}
+
+.music-box .progress .bar {
+    position: relative;
+    cursor: pointer;
+}
+
+.music-box .progress .bar .progress-total {
+    width: 100%;
+    height: 3px;
+    background-color: #888;
+}
+
+.music-box .progress .bar .progress-now {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 0;
+    height: 3px;
+    background-color: pink;
+}
+
+.music-box .progress .time {
+    text-align: right;
+    margin-top: 10px;
+    padding-right: 10px;
+}
+
+.music-box .list {
+    border: 1px solid pink;
+    min-height: 300px;
+}
+
+.music-box .list li {
+    border-bottom: 1px solid pink;
+    cursor: pointer;
+    text-align: center;
+    padding: 10px;
+}
+
+.music-box .list li.active {
+    background: pink;
+    color: #fff;
+}
+
+.music-box .list li:hover {
+    background: pink;
+    color: #fff;
+}
