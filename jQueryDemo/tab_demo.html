@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>tab</title>
+    <script src="./jquery.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        li {
+            list-style: none;
+        }
+
+        .box {
+            margin: 40px auto 0;
+            width: 400px;
+            min-height: 300px;
+        }
+
+        .box .tabs::after {
+            content: "";
+            clear: both;
+            display: block;
+        }
+
+        .box .tabs .item {
+            float: left;
+            padding: 5px 10px;
+            border-top: 1px solid #444;
+            border-left: 1px solid #444;
+            background: #999;
+            cursor: pointer;
+        }
+
+        .box .tabs .item:hover {
+            background-color: #ffffff;
+        }
+
+        .box .tabs .item.active {
+            background-color: #ffffff;
+        }
+
+        .box .tabs .item:last-child {
+            border-right: 1px solid #444;
+        }
+
+        .box .panel {
+            display: none;
+            border: 1px solid #444;
+            padding: 10px;
+            height: 200px;
+        }
+
+        .box .panel.active {
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box">
+        <ul class="tabs">
+            <li class="item active">tab1</li>
+            <li class="item">tab2</li>
+            <li class="item">tab3</li>
+            <li class="item">tab4</li>
+        </ul>
+        <div class="panel active">panel1</div>
+        <div class="panel">panel2</div>
+        <div class="panel">panel3</div>
+        <div class="panel">panel4</div>
+    </div>
+    <div class="box">
+        <ul class="tabs">
+            <li class="item active">tab1</li>
+            <li class="item">tab2</li>
+            <li class="item">tab3</li>
+            <li class="item">tab4</li>
+        </ul>
+        <div class="panel active">panel1</div>
+        <div class="panel">panel2</div>
+        <div class="panel">panel3</div>
+        <div class="panel">panel4</div>
+    </div>
+    <script>
+        // jQuery版
+        $('.tabs .item').on('click', function () {
+            $(this).siblings().removeClass('active')
+            $(this).addClass('active')
+            $(this).parents('.box').children('.panel').removeClass('active')
+            $(this).parents('.box').children('.panel').eq($(this).index()).addClass('active')
+        })
+
+        // 原生版
+        // document.querySelectorAll('.box .tabs').forEach(function (e, i) {
+        //     e.querySelectorAll('.item').forEach(function (e, i) {
+        //         e.addEventListener('click', function (e) {
+        //             // console.log(e.target)
+        //             e.target.parentElement.querySelectorAll('.item').forEach(function (e) {
+        //                 // console.log(e)
+        //                 e.classList.remove('active')
+        //             })
+        //             e.target.classList.add('active')
+        //             e.index = i
+        //             // console.log(e.index)
+        //             e.target.parentElement.parentElement.querySelectorAll('.panel').forEach(function (e, v) {
+        //                 if (v !== i) {
+        //                     // console.log(v)
+        //                     // console.log(i)
+        //                     // console.log(e)
+        //                     e.classList.remove('active')
+        //                 } else {
+        //                     e.classList.add('active')
+        //                 }
+        //             })
+        //         })
+        //     })
+        // })
+    </script>
+</body>
+
+</html>
