@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>use_demo</title>
+    <script src="./jquery.js"></script>
+    <style>
+        .warn {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box">
+        <input type="text" id="item" class="warn">
+        <input type="text" id="item2" value="0000000">
+    </div>
+    <script>
+        // .val() 这是一个读写双用的方法，用来处理input的value，当方法没有参数的时候返回input的value值，当传递了一个参数的时候，方法修改input的value值为参数值
+        $('#item').val('aaa')
+        // .attr() 获取元素特定属性值，或者设置元素特定属性
+        console.log($('#item'))
+        console.log($('#item').attr('type'))
+        $('#item2').attr({
+            type: 'submit'
+        })
+        // .removeAttr()  删除元素特定属性
+        $('#item').removeAttr('class')
+        // .prop() 获取元素对应prop或设置元素对应prop
+        console.log($('#item').prop('id'))
+        // .css()() 获取元素对应css属性或者设置元素对应css属性
+        $('#item').css({
+            background: 'yellow'
+        })
+        // .addClass() 添加特定class
+        $('#item2').addClass('warn')
+        // .removeClass() 删除特定class
+        $('#item').removeClass('warn')
+        // .hasClass() 判断元素是否具有对应class
+        $('#item2').hasClass('warn')
+        // .toggleClass() 切换元素的class，以前有则移除，以前没有则添加
+        $('#item').toggleClass('warn')
+    </script>
+</body>
+
+</html>

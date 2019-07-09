@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>use_demo</title>
+    <script src="./jquery.js"></script>
+</head>
+
+<body>a
+    <div class="box">
+        <p class="item">测试 一</p>
+    </div>
+    <script>
+        // .append() 给对应的jQuery对象里添加指定内容,添加到原来内容后
+        $('.item').append('<p>test2</p>')
+        // .prepend() 给对应的jQuery对象里添加指定内容,添加到原来内容前
+        $('.item').prepend('<p class="prepend" >prepend</p>')
+        // .before 给对应的jQuery对象前添加指定内容
+        $('.item').before('<p class="before" >before</p>')
+        // .after() 给对应的jQuery对象后添加指定内容
+        $('.item').after('<p>after</p>')
+        // .remove() 删除指定元素及其子元素，如果为空则删除当前被选择元素及其子元素
+        $('.item').remove()
+        // .empty() 清空选择元素的所有子元素
+        $('.item').empty()
+        // .html() 将传入的参数作为html放到被选择的元素中类似innerHTML,为空时获取innerHTML
+        $('.item').html('<h1>html()</h1>')
+        // .text() 将传入的参数放到被选择元素中类似innerText,为空时获取innerText
+        $('.item').text('<h1>html()</h1>')
+    </script>
+</body>
+
+</html>

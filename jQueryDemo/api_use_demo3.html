@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>use_demo</title>
+    <script src="./jquery.js"></script>
+</head>
+
+<body>
+    <div class="box">
+        <p class="text1">test1</p>
+        <p class="text2">test2</p>
+        <p class="text3">test3</p>
+        <p class="text4">test4</p>
+        <p class="text5">test5</p>
+    </div>
+    <script>
+        /*.each()
+$.extend()
+.clone()
+.index()
+.ready()*/
+        // .each() 类似与数组的forEach方法，遍历选中元素
+        $('p').each(function (index, e) {
+            $(e).text('test ' + index + ' each')
+        })
+        // $.extend() 将两个或多个对象合并到第一个对象上
+        var object1 = {
+            apple: 0,
+            banana: { weight: 52, price: 100 },
+            cherry: 97
+        };
+        var object2 = {
+            banana: { price: 200 },
+            durian: 100
+        };
+        console.log($.extend(object1, object2))
+        // .clone() 复制对应元素，返回一个副本
+        $('.text2').clone().insertBefore('.text5')
+        // .index() 从给定元素中寻找特定元素的index，如果不传递参数则返回第一个元素的index，传递的是jQuery或者dom对象则返回该对象在给定集合的index，传入的是选择器，则返回给定元素第一个匹配的该选择器的index
+        console.log($('p').index())
+        console.log($('p').index($('.text4')))
+        console.log($('.text3').index('p'))
+        // ready() 当DOM准备就绪时，指定一个函数来执行。
+        $(console.log($('p').length))
+
+    </script>
+</body>
+
+</html>
