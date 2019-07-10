@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>animation</title>
+    <script src="./jquery.js"></script>
+    <style>
+        .btn-wrap {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            width: 1000px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 6px 8px;
+            cursor: pointer;
+            color: red;
+            border: 1px solid red;
+            border-radius: 5px;
+        }
+
+        .btn:hover {
+            background: red;
+            color: #fff;
+        }
+
+        .box {
+            margin-top: 10px;
+            width: 100px;
+            height: 100px;
+            background: red;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- .show()
+        .hide()
+        .slideUp
+        .slideDown
+        .slideToggle
+        .fadeIn
+        .fadeOut
+        .animate -->
+    <div class="btn-wrap">
+        <div class="btn show">show</div>
+        <div class="btn hide">hide</div>
+        <div class="btn slideUp">slideUp</div>
+        <div class="btn slideDown">slideDown</div>
+        <div class="btn slideToggle">slideToggle</div>
+        <div class="btn fadeIn">fadeIn</div>
+        <div class="btn fadeOut">fadeOut</div>
+        <div class="btn animate">animate</div>
+        <div class="btn clear">clearQueue</div>
+        <div class="btn finish">finish</div>
+        <div class="btn stop">stop</div>
+    </div>
+    <div class="info"></div>
+    <div class="box"></div>
+    <script>
+        $('.show').on('click', function () {
+            $('.box').show(500)
+        })
+        $('.hide').on('click', function () {
+            $('.box').hide(500)
+        })
+        $('.slideUp').on('click', function () {
+            $('.box').slideUp(500)
+        })
+        $('.slideDown').on('click', function () {
+            $('.box').slideDown(500)
+        })
+        $('.slideToggle').on('click', function () {
+            $('.box').slideToggle(500)
+        })
+        $('.fadeIn').on('click', function () {
+            $('.box').fadeIn(500)
+        })
+        $('.fadeOut').on('click', function () {
+            $('.box').fadeOut(500, function () {
+                console.log('fade out complete')
+            })
+        })
+        // 上述函数均接受两个参数，一个duration表示动画时间，一个可选的complete函数表示动画完成后执行的函数
+        // animate 接受三个参数，一个properties表示动画目标状态, duration表示动画时间，一个可选的complete函数表示动画完成后执行的函数
+        $('.animate').on('click', function () {
+            setInterval(function () {
+                $('.info').last().text('当前动画队列长度：' + $('.box').queue("fx").length)
+            }, 100)
+            $('.box').animate({
+                width: 300
+            }, 500).animate({
+                width: 400
+            }, 500).animate({
+                width: 500
+            }, 500).animate({
+                width: 600
+            }, 500).animate({
+                width: 400
+            }, 500).animate({
+                width: 100
+            }, 500)
+
+            console.log($('.box').queue("fx"))
+
+            $('.box').queue('fx', function () {
+                $('.box').animate({
+                    height: 400
+                }, 500)
+                $(this).dequeue()
+            })
+            $('.box').animate({
+                width: 300
+            }, 500).animate({
+                width: 600
+            }, 500)
+            console.log($('.box').queue("fx"))
+        })
+        $('.clear').on('click', function () {
+            $('.box').clearQueue()
+        })
+        $('.finish').on('click', function () {
+            $('.box').finish()
+        })
+        $('.stop').on('click', function () {
+            $('.box').stop()
+        })
+    </script>
+</body>
+
+</html>

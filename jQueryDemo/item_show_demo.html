@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>shop</title>
+    <script src='./jquery.js'></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            /* box-sizing: border-box; */
+        }
+
+        body {
+            font: 12px/150% Arial, Verdana, "\5b8b\4f53";
+            color: #666;
+        }
+
+        .box {
+            width: 800px;
+            margin: 100px auto;
+        }
+
+        .btn {
+            border: 1px solid red;
+            color: red;
+            padding: 9px 12px;
+            border-radius: 1px;
+            display: inline-block;
+            background: #fff;
+            cursor: pointer;
+        }
+
+        .item-wrap {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-start;
+            margin-right: -37px;
+        }
+
+        .item-wrap .item-card {
+            position: relative;
+            border: 1px solid #eee;
+            width: 200px;
+            padding: 20px;
+            margin-right: 37px;
+            margin-bottom: 20px;
+        }
+
+        .item-wrap .item-card .cover {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.3);
+            opacity: 0;
+        }
+
+        .item-wrap .item-card.hover .cover {
+            opacity: 1;
+        }
+
+        .item-wrap .item-card .cover .delete {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .item-wrap .item-card img {
+            width: 100%;
+            margin-bottom: 10px;
+        }
+
+        .item-wrap .item-card .info {
+            color: #666;
+            font-style: 12px;
+            margin-bottom: 10px;
+        }
+
+        .item-wrap .item-card .price {
+            color: red;
+            font-style: 12px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box">
+        <div class="item-wrap">
+        </div>
+        <div class="btn-wrap">
+            <div class="btn add">添加</div>
+            <div class="btn edit">编辑</div>
+        </div>
+    </div>
+    <script>
+        $('.edit').on('click', function () {
+            $('.item-card').toggleClass('hover')
+        })
+        $('.add').on('click', function () {
+            let items = getData()
+            $.each(items, function (i, e) {
+                $('.item-wrap').append(e)
+            })
+        })
+        $('.item-wrap').on('click', '.delete', function () {
+            $(this).parents('.item-card').remove()
+        })
+        function generateItem(info = "测试名称", price = 88.8) {
+            let src = "https://picsum.photos/200/200/?image" + Math.floor(Math.random() * 100)
+            return `<div class="item-card">
+                    <div class="cover">
+                        <div class="btn delete">删除</div>
+                    </div>
+                    <img src="${src}">
+                    <div class="info">${info}</div>
+                    <div class="price">¥${price}</div>
+                </div>`
+        }
+        function getData() {
+            let res = []
+            for (let i = 0; i < 3; i++) {
+                res.push(generateItem())
+            }
+            return res
+        }
+    </script>
+</body>
+
+</html>

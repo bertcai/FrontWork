@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>event</title>
+    <script src="./jquery.js"></script>
+</head>
+
+<body>
+    <ul class="warp">
+        <li>test1</li>
+        <li>test2</li>
+        <li>test3</li>
+        <li>test4</li>
+    </ul>
+    <input type="text" class="news" placeholder="填写内容添加到列表">
+    <input type="button" value="添加" class="add">
+    <script>
+        // 普通事件绑定方式
+        $('.add').on('click', function () {
+            if ($('.news').val() !== '') {
+                $('ul').append('<li>' + $('.news').val() + '</li>')
+            }
+            $('.news').val('')
+        })
+        // 事件代理
+        $('ul').on('click', 'li', function () {
+            console.log($(this).text())
+        })
+    </script>
+</body>
+
+</html>

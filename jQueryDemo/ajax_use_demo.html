@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>ajax use</title>
+    <script src="./jquery.js"></script>
+</head>
+
+<body>
+    <!-- $.ajax
+        $.get
+        $.getJSON -->
+    <div class="payload"></div>
+    <script>
+        $.ajax({
+            url: './data.json',
+            type: 'GET',
+            dataType: 'json',
+            data: {
+                user: 'aaa',
+                password: '123'
+            }
+        }).done(function (res) {
+            $('.payload').text(JSON.stringify(res))
+        }).fail(function (res) {
+            $('.payload').text('fail')
+        }).always(function () {
+            console.log('always finish the ajax')
+        }) // 泛用型最强的ajax请求方式
+        $.get('./data.json').done(function (res) {
+            $('.payload').text(JSON.stringify(res))
+        }).fail(function (res) {
+            $('.payload').text('fail')
+        }).always(function () {
+            console.log('always finish the ajax')
+        }) // get请求的简写
+        $.getJSON('./data.json').done(function () {
+            console.log('getJSON')
+        })
+        // 使用一个HTTP GET请求从服务器加载JSON编码的数据
+    </script>
+</body>
+
+</html>
