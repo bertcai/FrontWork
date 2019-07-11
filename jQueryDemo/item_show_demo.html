@@ -99,7 +99,9 @@
         </div>
     </div>
     <script>
+        let editFlag = false
         $('.edit').on('click', function () {
+            editFlag = !editFlag
             $('.item-card').toggleClass('hover')
         })
         $('.add').on('click', function () {
@@ -112,8 +114,9 @@
             $(this).parents('.item-card').remove()
         })
         function generateItem(info = "测试名称", price = 88.8) {
+            let hover = editFlag ? 'hover' : ''
             let src = "https://picsum.photos/200/200/?image" + Math.floor(Math.random() * 100)
-            return `<div class="item-card">
+            return `<div class="item-card ${hover}">
                     <div class="cover">
                         <div class="btn delete">删除</div>
                     </div>
