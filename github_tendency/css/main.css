@@ -58,8 +58,28 @@ footer div span {
     padding: 5px;
 }
 
-.container{
+.container {
     padding: 0 10px;
+}
+
+.loading {
+    text-align: center;
+}
+
+.loading .iconfont {
+    padding: 5px;
+    display: inline-block;
+    animation: rotate 1000ms linear infinite;
+}
+
+@keyframes rotate {
+    0% {
+        transform: rotate(0deg)
+    }
+
+    100% {
+        transform: rotate(360deg)
+    }
 }
 
 .item {
@@ -70,7 +90,7 @@ footer div span {
     padding-bottom: 10px;
 }
 
-.item:hover{
+.item:hover {
     background: #ccc;
 }
 
