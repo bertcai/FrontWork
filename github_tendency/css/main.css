@@ -16,17 +16,16 @@ body {
 }
 
 html,
-body {
+body,
+main {
     height: 100%;
+    position: relative;
 }
 
-main {
+main>section {
     height: calc(100vh - 50px);
     width: 100%;
     overflow: scroll;
-}
-
-main section {
     display: none;
 }
 
@@ -64,6 +63,7 @@ footer div span {
 
 .loading {
     text-align: center;
+    display: none;
 }
 
 .loading .iconfont {
