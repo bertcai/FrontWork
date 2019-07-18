@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Image LazyLoad</title>
+    <script src="./jquery.js"></script>
+    <style>
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-evenly;
+            width: 100%;
+        }
+
+        .container img {
+            width: 300px;
+            height: 300px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <img src="http://smashinghub.com/wp-content/uploads/2014/08/cool-loading-animated-gif-3.gif" alt="1"
+            data="http://cdn.jirengu.com/book.jirengu.com/img/1.jpg">
+        <img src="http://smashinghub.com/wp-content/uploads/2014/08/cool-loading-animated-gif-3.gif" alt="2"
+            data="http://cdn.jirengu.com/book.jirengu.com/img/2.jpg">
+        <img src="http://smashinghub.com/wp-content/uploads/2014/08/cool-loading-animated-gif-3.gif" alt="3"
+            data="http://cdn.jirengu.com/book.jirengu.com/img/3.jpg">
+        <img src="http://smashinghub.com/wp-content/uploads/2014/08/cool-loading-animated-gif-3.gif" alt="4"
+            data="http://cdn.jirengu.com/book.jirengu.com/img/4.jpg">
+        <img src="http://smashinghub.com/wp-content/uploads/2014/08/cool-loading-animated-gif-3.gif" alt="5"
+            data="http://cdn.jirengu.com/book.jirengu.com/img/5.jpg">
+        <img src="http://smashinghub.com/wp-content/uploads/2014/08/cool-loading-animated-gif-3.gif" alt="6"
+            data="http://cdn.jirengu.com/book.jirengu.com/img/6.jpg">
+        <img src="http://smashinghub.com/wp-content/uploads/2014/08/cool-loading-animated-gif-3.gif" alt="7"
+            data="http://cdn.jirengu.com/book.jirengu.com/img/7.jpg">
+        <img src="http://smashinghub.com/wp-content/uploads/2014/08/cool-loading-animated-gif-3.gif" alt="8"
+            data="http://cdn.jirengu.com/book.jirengu.com/img/8.jpg">
+        <img src="http://smashinghub.com/wp-content/uploads/2014/08/cool-loading-animated-gif-3.gif" alt="9"
+            data="http://cdn.jirengu.com/book.jirengu.com/img/9.jpg">
+        <img src="http://smashinghub.com/wp-content/uploads/2014/08/cool-loading-animated-gif-3.gif" alt="10"
+            data="http://cdn.jirengu.com/book.jirengu.com/img/10.jpg">
+        <img src="http://smashinghub.com/wp-content/uploads/2014/08/cool-loading-animated-gif-3.gif" alt="11"
+            data="http://cdn.jirengu.com/book.jirengu.com/img/11.jpg">
+        <img src="http://smashinghub.com/wp-content/uploads/2014/08/cool-loading-animated-gif-3.gif" alt="12"
+            data="http://cdn.jirengu.com/book.jirengu.com/img/12.jpg">
+        <img src="http://smashinghub.com/wp-content/uploads/2014/08/cool-loading-animated-gif-3.gif" alt="13"
+            data="http://cdn.jirengu.com/book.jirengu.com/img/13.jpg">
+        <img src="http://smashinghub.com/wp-content/uploads/2014/08/cool-loading-animated-gif-3.gif" alt="14"
+            data="http://cdn.jirengu.com/book.jirengu.com/img/14.jpg">
+        <img src="http://smashinghub.com/wp-content/uploads/2014/08/cool-loading-animated-gif-3.gif" alt="15"
+            data="http://cdn.jirengu.com/book.jirengu.com/img/15.jpg">
+        <img src="http://smashinghub.com/wp-content/uploads/2014/08/cool-loading-animated-gif-3.gif" alt="16"
+            data="http://cdn.jirengu.com/book.jirengu.com/img/16.jpg">
+        <img src="http://smashinghub.com/wp-content/uploads/2014/08/cool-loading-animated-gif-3.gif" alt="17"
+            data="http://cdn.jirengu.com/book.jirengu.com/img/17.jpg">
+        <img src="http://smashinghub.com/wp-content/uploads/2014/08/cool-loading-animated-gif-3.gif" alt="18"
+            data="http://cdn.jirengu.com/book.jirengu.com/img/18.jpg">
+        <img src="http://smashinghub.com/wp-content/uploads/2014/08/cool-loading-animated-gif-3.gif" alt="19"
+            data="http://cdn.jirengu.com/book.jirengu.com/img/19.jpg">
+        <img src="http://smashinghub.com/wp-content/uploads/2014/08/cool-loading-animated-gif-3.gif" alt="20"
+            data="http://cdn.jirengu.com/book.jirengu.com/img/20.jpg">
+    </div>
+    <script>
+
+        lazyLoad()
+
+
+        let timer = null
+        $(window).on('scroll', function () {
+            if (timer) {
+                clearTimeout(timer)
+            }
+            timer = setTimeout(lazyLoad, 200)
+        }) 
+
+        function lazyLoad() {
+            console.log(111)
+            $('.container img').not('.load').each(function () {
+                let $node = $(this)
+                if (isShow($node)) {
+                    loadImg($node)
+                }
+            })
+        }
+
+        function isShow($node) {
+            return $(window).height() + $(window).scrollTop() >= $node.offset().top
+        }
+
+        function loadImg($img) {
+            $img.attr('src', $img.attr('data'))
+            $img.addClass('load')
+        }
+    </script>
+</body>
+
+</html>
