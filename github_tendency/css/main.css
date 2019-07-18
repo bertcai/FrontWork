@@ -57,6 +57,45 @@ footer div span {
     padding: 5px;
 }
 
+.search {
+    position: relative;
+}
+
+.search-box {
+    display: flex;
+    width: 100%;
+    position: absolute;
+    padding: 10px;
+    top: 0;
+    left: 0;
+    box-sizing: border-box;
+    border-bottom: 1px solid #ccc;
+}
+
+.search-box .keyword {
+    width: calc(100% - 80px);
+    padding: 8px;
+    background-color: #eee;
+    outline: none;
+    box-shadow: none;
+    border: none;
+    border-radius: 2px;
+}
+
+.search-box .btn {
+    width: 80px;
+    text-align: center;
+    padding: 8px;
+    background-color: orangered;
+    color: white;
+    border-radius: 2px;
+    cursor: pointer;
+}
+
+.search .container {
+    margin-top: 54px;
+}
+
 .container {
     padding: 0 10px;
 }
@@ -90,14 +129,20 @@ footer div span {
     padding-bottom: 10px;
 }
 
-.item:hover {
+/* .item:hover {
     background: #ccc;
-}
+} */
 
 .item a {
     display: flex;
     width: 100%;
     color: #333;
+}
+
+.item .avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 4px;
 }
 
 .item .order {
