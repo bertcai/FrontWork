@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Water Fall</title>
+    <script src="./jquery.js"></script>
+    <style>
+        .container {
+            max-width: 600px;
+            position: relative;
+        }
+
+        img {
+            width: 100px;
+            position: absolute;
+            padding: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <img src="https://via.placeholder.com/100px*10" alt="1">
+        <img src="https://via.placeholder.com/100px*20" alt="2">
+        <img src="https://via.placeholder.com/100px*30" alt="3">
+        <img src="https://via.placeholder.com/100px*40" alt="4">
+        <img src="https://via.placeholder.com/100px*50" alt="5">
+        <img src="https://via.placeholder.com/100px*60" alt="6">
+        <img src="https://via.placeholder.com/100px*70" alt="7">
+        <img src="https://via.placeholder.com/100px*80" alt="8">
+        <img src="https://via.placeholder.com/100px*90" alt="9">
+        <img src="https://via.placeholder.com/100px*100" alt="10">
+        <img src="https://via.placeholder.com/100px*110" alt="11">
+        <img src="https://via.placeholder.com/100px*120" alt="12">
+        <img src="https://via.placeholder.com/100px*130" alt="13">
+        <img src="https://via.placeholder.com/100px*140" alt="14">
+        <img src="https://via.placeholder.com/100px*150" alt="15">
+        <img src="https://via.placeholder.com/100px*160" alt="16">
+        <img src="https://via.placeholder.com/100px*170" alt="17">
+        <img src="https://via.placeholder.com/100px*180" alt="18">
+        <img src="https://via.placeholder.com/100px*190" alt="19">
+        <img src="https://via.placeholder.com/100px*200" alt="20">
+    </div>
+    <script>
+        let imgWidth = $('img').outerWidth(true)
+        let colCount = Math.floor($('.container').width() / imgWidth)
+        // console.log(colCount)
+        let colHeightArray = []
+        for (let i = 0; i < colCount; i++) {
+            colHeightArray[i] = 0
+        }
+        // console.log(colHeightArray)
+        $('.container img').on('load', function () {
+            let minIndex = 0
+            let minHeight = colHeightArray[0]
+            for (let i = 0; i < colCount; i++) {
+                if (colHeightArray[i] < minHeight) {
+                    minIndex = i
+                    minHeight = colHeightArray[i]
+                }
+            }
+            $(this).css({
+                left: minIndex * imgWidth,
+                top: minHeight
+            })
+            colHeightArray[minIndex] += $(this).outerHeight()
+            // console.log(colHeightArray)
+        })
+    </script>
+</body>
+
+</html>
