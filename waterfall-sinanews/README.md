@@ -2,6 +2,7 @@
 
 ## 预览地址
 
+[http://js.jirengu.com/zeqirojuye](http://js.jirengu.com/zeqirojuye)
 
 ## 懒加载原理
 
