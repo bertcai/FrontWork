@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Sina News</title>
+    <script src="../jQueryDemo/jquery.js"></script>
+    <style>
+        html,
+        body,
+        ul,
+        li,
+        p,
+        div {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        .clearfix::after {
+            content: '';
+            display: block;
+            clear: both;
+        }
+
+        .wrap {
+            /* position: relative; */
+            width: 900px;
+            margin: 0 auto;
+        }
+
+        .ct-news {
+            position: relative;
+        }
+
+        .ct-news .item {
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            margin: 10px;
+            width: 280px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            background: #fff;
+            opacity: 0;
+            transition: all .8s;
+        }
+
+        .ct-news .item a img {
+            width: 260px;
+        }
+
+        .ct-news .item .title {
+            font-size: 18px;
+        }
+
+        .ct-news .item .desc {
+            color: #aaa;
+            font-size: 12px;
+            margin: 10px 2px;
+        }
+
+        .hide {
+            display: none;
+        }
+
+        #load {
+            visibility: hidden;
+            height: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <div class="ct-waterfall">
+            <ul class="ct-news clearfix">
+                <li class="item hide">
+                    <a href="#" class="link">
+                        <img src="https://k.sinaimg.cn/n/mil/transform/200/w600h400/20190323/m8xW-huqrnap3098907.jpg/w640slw.jpg"
+                            alt="">
+                    </a>
+                    <h2 class="title">这是一个标题</h2>
+                    <p class="desc">这是一段描述</p>
+                </li>
+            </ul>
+            <div id="load">一个不可见的load</div>
+        </div>
+    </div>
+    <script>
+        let curPage = 1;
+        const pageSize = 10;
+        const apiUrl = 'https://photo.sina.cn/aj/v2/index?cate=military'  //&page=1&pagesize=5
+        const nodeWidth = $('.item').outerWidth(true)
+        const colCount = Math.floor($('.ct-news').width() / nodeWidth)
+        let colHeightArray = []
+        let timer = null
+        console.log(colCount)
+        for (let i = 0; i < colCount; i++) {
+            colHeightArray[i] = 0
+        }
+        let isDataArrive = false
+
+        start()
+
+        $(window).on('scroll', function () {
+            if (timer) {
+                clearTimeout(timer)
+            }
+            if (!isDataArrive) {
+                return
+            }
+            timer = setTimeout(function () {
+                if (isLoadShow()) {
+                    start()
+                }
+            }, 100)
+        })
+
+        function start() {
+            getData(function (data) {
+                console.log(data)
+                isDataArrive = true
+                $.each(data, function (index, item) {
+                    let $node = createNode(item)
+                    $node.find('img').on('load', function () {
+                        $('.ct-news').append($node)
+                        console.log($node, 'loaded...')
+                        waterFallPlace($node)
+                    })
+                })
+            })
+            console.log($('li').length)
+            isDataArrive = false
+        }
+
+        function getData(callback) {
+            $.ajax({
+                url: apiUrl,
+                data: {
+                    page: curPage,
+                    pagesize: pageSize
+                },
+                dataType: 'jsonp',
+                jsonp: 'callback'
+            }).done(function (res) {
+                curPage++
+                callback(res.data)
+            }).fail(function () {
+                console.log('fail')
+            })
+        }
+
+        function createNode(item) {
+            const tpl = `<li class="item">
+                    <a href="#" class="link">
+                        <img src="https://k.sinaimg.cn/n/mil/transform/200/w600h400/20190323/m8xW-huqrnap3098907.jpg/w640slw.jpg"
+                            alt="">
+                    </a>
+                    <h2 class="title">这是一个标题</h2>
+                    <p class="desc">这是一段描述</p>
+                </li>`
+            let $tpl = $(tpl)
+            $tpl.find('img').attr('src', item.thumb)
+            $tpl.find('.link').attr('href', item.url)
+            $tpl.find('.title').text(item.stitle)
+            $tpl.find('.desc').text(item.title)
+            return $tpl
+        }
+
+        function waterFallPlace($node) {
+            console.log($node)
+            let minIndex = 0;
+            let minHeight = colHeightArray[minIndex]
+            for (let i = 0; i < colCount; i++) {
+                if (colHeightArray[i] < minHeight) {
+                    minIndex = i;
+                    minHeight = colHeightArray[i];
+                }
+            }
+            $node.css({
+                left: minIndex * 300,
+                top: minHeight,
+                opacity: 1
+            })
+            colHeightArray[minIndex] += $node.outerHeight(true)
+            $('.ct-news').height(colHeightArray[minIndex])
+        }
+
+        function isLoadShow() {
+            return $(window).height() + $(window).scrollTop() > $('#load').offset().top
+        }
+    </script>
+</body>
+
+</html>

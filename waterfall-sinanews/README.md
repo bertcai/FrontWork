@@ -27,12 +27,48 @@
 
 判断滚动容器视窗高度`height`，容器滚动高度`scrollTop`，元素相对于容器的高度`offsetHeight`三个值，`heigth+scrollTop>=offsetHeight`时表示元素出现在了用户视野中，此时加载元素。
 
-```
+```javascript
+$(window).on('scroll', function () {
+    if (timer) {
+        clearTimeout(timer)
+    }
+    if (!isDataArrive) {
+        return
+    }
+    timer = setTimeout(function () {
+        if (isLoadShow()) {
+            start()
+        }
+    }, 100)
+})
+
+// 判断是否滚动到需要加载新内容的位置
+function isLoadShow() {
+    return $(window).height() + $(window).scrollTop() > $('#load').offset().top
+}
 ```
 
 ### 瀑布流核心
 
 设置一个列高数组`colHeightArray`,每次加载新元素时，查找数组高度最低的列数`minIndex`，将新元素拼接在该列后面，更新高度`colHeightArray[minIndex] += itemHeight`,依次加载拼接元素，实现瀑布流。
 
-```
+``` javascript
+function waterFallPlace($node) {
+    console.log($node)
+    let minIndex = 0;
+    let minHeight = colHeightArray[minIndex]
+    for (let i = 0; i < colCount; i++) {
+        if (colHeightArray[i] < minHeight) {
+            minIndex = i;
+            minHeight = colHeightArray[i];
+        }
+    }
+    $node.css({
+        left: minIndex * 300,
+        top: minHeight,
+        opacity: 1
+    })
+    colHeightArray[minIndex] += $node.outerHeight(true)
+    $('.ct-news').height(colHeightArray[minIndex])
+}
 ```
