@@ -8,11 +8,11 @@ const EventListener = {
     }
 }
 
-EventListener.on('hello', function (e, data) {
-    console.log(e, data)
-})
+// EventListener.on('hello', function (e, data) {
+//     console.log(e, data)
+// })
 
-EventListener.fire('hello', 'ssss')
+// EventListener.fire('hello', 'ssss')
 
 let Footer = {
     init: function () {
@@ -23,28 +23,23 @@ let Footer = {
         this.$forwardBtn = $('.icon-forward')
         this.isToStart = true
         this.isToEnd = false
-        this.timer = null
+        this.isAnimate = false
         this.render()
         this.bind()
     },
     bind: function () {
         let _this = this
         this.$forwardBtn.on('click', function () {
-            if (_this.timer) {
-                console.log(_this.timer)
-                clearTimeout(_this.timer)
+            if (_this.isAnimate) {
+                return
             }
-            _this.timer = setTimeout(function () {
-                _this.forward()
-            }, 300)
+            _this.forward()
         })
         this.$backBtn.on('click', function () {
-            if (_this.timer) {
-                clearTimeout(_this.timer)
+            if (_this.isAnimate) {
+                return
             }
-            _this.timer = setTimeout(function () {
-                _this.back()
-            }, 300)
+            _this.back()
         })
         this.$footer.on('click', 'li', function () {
             $(this).addClass('active')
@@ -91,28 +86,36 @@ let Footer = {
         })
     },
     back: function () {
-        console.log(this)
+        // console.log(this)
         let _this = this
         this.isToEnd = false
         let itemWidth = _this.$ul.find('li').outerWidth(true)
         let itemCount = Math.floor(_this.$box.width() / itemWidth)
         let ulLeft = parseFloat(_this.$ul.css('left'))
         console.log(itemCount, itemWidth, ulLeft)
-        if ((ulLeft + itemCount * itemWidth) > 0) {
+        if ((ulLeft + itemCount * itemWidth) > -10) {
             console.log('over')
             _this.isToStart = true
+            _this.isAnimate = true
             _this.$ul.animate({
                 left: 0
-            }, 300)
+            }, 400, function () {
+                _this.isAnimate = false
+            })
         }
         if (!_this.isToStart) {
+            console.log('sss')
+            _this.isAnimate = true
             _this.$ul.animate({
                 left: '+=' + itemCount * itemWidth
-            }, 300)
+            }, 400, function () {
+                _this.isAnimate = false
+            })
         }
+        console.log(parseFloat(_this.$ul.css('left')))
     },
     forward: function () {
-        console.log(this)
+        // console.log(this)
         let _this = this
         _this.isToStart = false
         let itemWidth = _this.$ul.find('li').outerWidth(true)
@@ -125,9 +128,134 @@ let Footer = {
             _this.isToEnd = true
         }
         if (!_this.isToEnd) {
+            _this.isAnimate = true
             _this.$ul.animate({
                 left: '-=' + itemCount * itemWidth
-            }, 300)
+
+            }, 400, function () {
+                _this.isAnimate = false
+            })
+        }
+    }
+}
+
+let Fm = {
+    init: function () {
+        this.$container = $('#page-music')
+        this.audio = new Audio()
+        this.audio.autoplay = true
+        this.statusInterval = null
+        this.bind()
+    },
+    bind: function () {
+        let _this = this
+        EventListener.on('select-chanel', function (e, data) {
+            console.log(data)
+            _this.channel_id = data.channel_id
+            _this.channel_name = data.channel_name
+            _this.loadMusic()
+        })
+        this.$container.find('.btn-play').on('click', function () {
+            if ($(this).hasClass('icon-play')) {
+                $(this).removeClass('icon-play').addClass('icon-pause')
+                _this.audio.play()
+            } else {
+                $(this).removeClass('icon-pause').addClass('icon-play')
+                _this.audio.pause()
+            }
+        })
+        this.$container.find('.btn-next').on('click', function () {
+            _this.loadMusic()
+        })
+        this.audio.addEventListener('play', function () {
+            if (_this.statusInterval) {
+                clearInterval(_this.statusInterval)
+            }
+            _this.statusInterval = setInterval(function () {
+                _this.updateStatus()
+            }, 500)
+        })
+        this.audio.addEventListener('pause', function () {
+            if (_this.statusInterval) {
+                clearInterval(_this.statusInterval)
+            }
+            clearInterval(_this.statusInterval)
+        })
+
+    },
+    loadMusic() {
+        let _this = this
+        $.getJSON('//api.jirengu.com/fm/getSong.php', {
+            channel: _this.channel_id
+        }).done(function (res) {
+            // console.log(res)
+            _this.song = res.song[0]
+            console.log(_this.song)
+            _this.setMusic()
+            _this.loadLyric()
+        }).fail(function () {
+            console.log('song fail...')
+        })
+    },
+    setMusic() {
+        this.audio.src = this.song.url
+        this.$container.find('.tag').text(this.channel_name)
+        this.$container.find('.detail h1').text(this.song.title)
+        this.$container.find('.author').text(this.song.artist)
+        this.$container.find('figure').css('background-image', `url(${this.song.picture})`)
+        $('.bg').css('background-image', `url(${this.song.picture})`)
+        this.$container.find('.btn-play').removeClass('icon-play').addClass('icon-pause')
+    },
+    loadLyric() {
+        let _this = this
+        $.getJSON('//api.jirengu.com/fm/getLyric.php', {
+            sid: _this.song.sid
+        }).done(function (res) {
+            // console.log(res)
+            _this.lyric = res.lyric
+            // console.log(_this.lyric)
+            _this.setLyricObj()
+        }).fail(function () {
+            console.log('lyric fail...')
+            _this.lyricObj = {
+                '00:00': '该歌曲暂无歌词'
+            }
+        })
+    },
+    setLyricObj() {
+        let lyric = this.lyric.split('\n')
+        let lyricObj = {}
+        lyric.forEach(function (line) {
+            // [01:22][02:22]
+            // console.log(line)
+            let times = line.match(/\d{2}:\d{2}/g)
+            let str = line.replace(/\[.+?\]/g, '')
+            // console.log(str)
+            if (Array.isArray(times)) {
+                lyricObj[times] = str
+            }
+            // console.log(times)
+        })
+        this.lyricObj = lyricObj
+    },
+    updateStatus() {
+        let min = Math.floor(this.audio.currentTime / 60)
+        let seconds = Math.floor(this.audio.currentTime % 60)
+        seconds = seconds.toString().length === 2 ? seconds.toString() : '0' + seconds.toString()
+        let timeStr = min + ':' + seconds
+        // console.log(timeStr)
+        this.$container.find('.current-time').text(timeStr)
+
+        let percent = Math.floor((this.audio.currentTime / this.audio.duration) * 100)
+        this.$container.find('.current-bar').css({
+            width: percent + '%'
+        })
+
+
+        let lyric = this.lyricObj['0' + timeStr] || 'undefined'
+        if (lyric !== 'undefined') {
+            console.log(this.lyricObj['0' + timeStr])
+            this.$container.find('.lyric').text(lyric).boomText()
         }
     }
 }
@@ -136,11 +264,27 @@ let Footer = {
 
 const App = {
     init: function () {
-        EventListener.on('select-chanel', function (e, data) {
-            console.log(data)
-        })
+        Fm.init()
         Footer.init()
     }
 }
 
 App.init()
+
+$.fn.boomText = function (type = 'rotateInDownLeft') {
+    $(this).html(function () {
+        let arr = $(this).text().split('').map(function (e) {
+            return `<span class="boomText">${e}</span>`
+        })
+        return arr.join('')
+    })
+    let index = 0
+    let $boomText = $(this).find('span')
+    let clock = setInterval(function () {
+        $boomText.eq(index).addClass('animated ' + type)
+        index++
+        if (index > $boomText.length) {
+            clearInterval(clock)
+        }
+    }, 300)
+}

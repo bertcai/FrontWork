@@ -12,7 +12,7 @@ main {
     position: absolute;
     background: url(https://gss2.bdstatic.com/-fo3dSag_xI4khGkpoWK1HF6hhy/baike/w%3D268%3Bg%3D0/sign=3c71bc94532c11dfded1b8255b1c05ed/bd3eb13533fa828bf8b6e694f91f4134970a5a2b.jpg) center center no-repeat;
     background-size: cover;
-    filter: blur(4px);
+    filter: blur(10px);
     top: -10px;
     bottom: -10px;
     left: -10px;
@@ -136,6 +136,7 @@ main {
     width: 10%;
     background: #ffffff;
     border-radius: .2vh;
+    transition: width .8s;
 }
 
 .layout .detail .progress .current-time {
@@ -202,10 +203,11 @@ footer .layout .box ul {
     left: 0;
     width: 2000px;
 }
+
 footer .layout .box ul::after {
-   content: '';
-   display: block;
-   clear: both;
+    content: '';
+    display: block;
+    clear: both;
 }
 
 footer .layout .box ul li {
@@ -235,4 +237,9 @@ footer .layout .box ul li .cover {
 footer .layout .box ul li h3 {
     font-size: 3vh;
     color: rgba(255, 255, 255, 0.4);
+}
+
+.boomText {
+    display: inline-block;
+    opacity: 0;
 }
