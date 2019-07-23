@@ -1,0 +1,238 @@
+#page-cover {
+    display: none;
+}
+
+main {
+    display: flex;
+    padding-top: 12vh;
+    height: calc(100% - 24vh);
+}
+
+.bg {
+    position: absolute;
+    background: url(https://gss2.bdstatic.com/-fo3dSag_xI4khGkpoWK1HF6hhy/baike/w%3D268%3Bg%3D0/sign=3c71bc94532c11dfded1b8255b1c05ed/bd3eb13533fa828bf8b6e694f91f4134970a5a2b.jpg) center center no-repeat;
+    background-size: cover;
+    filter: blur(4px);
+    top: -10px;
+    bottom: -10px;
+    left: -10px;
+    right: -10px;
+    z-index: -1;
+}
+
+.bg::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.4);
+}
+
+
+.layout {
+    margin: 0 auto;
+    width: 600px;
+}
+
+@media (min-width:700px) {
+    .layout {
+        width: 600px;
+    }
+}
+
+@media (min-width:800px) {
+    .layout {
+        width: 700px;
+    }
+}
+
+@media (min-width:900px) {
+    .layout {
+        width: 800px;
+    }
+}
+
+@media (min-width:1000px) {
+    .layout {
+        width: 900px;
+    }
+}
+
+.layout .aside figure {
+    width: 46vh;
+    height: 46vh;
+    background: center center no-repeat;
+    background-size: cover;
+}
+
+.layout .aside .action {
+    margin-top: 4vh;
+    display: flex;
+}
+
+.layout .aside .action .iconfont {
+    flex: 1;
+    font-size: 4vh;
+    color: rgba(255, 255, 255, 0.4);
+    cursor: pointer;
+    text-align: center;
+    transition: color .8s;
+}
+
+.layout .aside .action .iconfont:hover {
+    color: #ffffff;
+}
+
+.layout .detail {
+    flex: 1;
+    margin-left: 10vh;
+}
+
+.layout .detail .tag {
+    font-size: 2vh;
+    background: #2e6eec;
+    color: #ffffff;
+    padding: .4em .8em;
+}
+
+.layout .detail h1 {
+    font-size: 6vh;
+    color: #ffffff;
+}
+
+.layout .detail .icons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10vh;
+}
+
+.layout .detail .icons li {
+    color: #ffffff;
+    font-size: 2vh;
+    flex: 1;
+}
+
+.layout .detail .progress {
+    display: flex;
+    align-items: center;
+    margin-top: 10vh;
+}
+
+.layout .detail .progress .progress-bar {
+    position: relative;
+    flex: 1;
+    height: .8vh;
+    background: rgba(255, 255, 255, 0.4);
+    border-radius: .2vh;
+}
+
+.layout .detail .progress .progress-bar .current-bar {
+    position: absolute;
+    top: o;
+    left: 0;
+    height: .8vh;
+    width: 10%;
+    background: #ffffff;
+    border-radius: .2vh;
+}
+
+.layout .detail .progress .current-time {
+    color: #ffffff;
+    margin-left: 1vh;
+}
+
+.layout .detail .author {
+    color: rgba(255, 255, 255, 0.4);
+    font-size: 2vh;
+    margin-top: 2vh;
+}
+
+.layout .detail .lyric {
+    color: #ffffff;
+    font-size: 3vh;
+    margin-top: 3vh;
+}
+
+footer {
+    height: 24vh;
+    padding-top: 2vh;
+    background: rgba(255, 255, 255, 0.2);
+}
+
+footer .layout {
+    position: relative;
+}
+
+footer .layout .iconfont {
+    font-size: 10vh;
+    color: rgba(255, 255, 255, 0.4);
+    opacity: 0;
+    cursor: pointer;
+    transition: all .8s;
+}
+
+footer:hover .layout .iconfont {
+    opacity: 1;
+}
+
+footer .layout .iconfont:hover {
+    color: #ffffff;
+}
+
+footer .layout .icon-back {
+    position: absolute;
+    left: -10vh;
+}
+
+footer .layout .icon-forward {
+    position: absolute;
+    right: -10vh;
+}
+
+footer .layout .box {
+    position: relative;
+    height: 24vh;
+    overflow: hidden;
+}
+
+footer .layout .box ul {
+    position: absolute;
+    left: 0;
+    width: 2000px;
+}
+footer .layout .box ul::after {
+   content: '';
+   display: block;
+   clear: both;
+}
+
+footer .layout .box ul li {
+    float: left;
+    margin: 2vh;
+    margin-top: 1vh;
+    width: 20vh;
+    height: 20vh;
+    text-align: center;
+    cursor: pointer;
+}
+
+footer .layout .box ul li:hover {
+    box-shadow: 0 0 0.5vh 0.5vh rgba(255, 255, 255, 0.8);
+}
+
+footer .layout .box ul li.active {
+    box-shadow: 0 0 0.5vh 0.5vh rgba(255, 255, 255, 0.8);
+}
+
+footer .layout .box ul li .cover {
+    height: 15vh;
+    background: center center no-repeat;
+    background-size: cover;
+}
+
+footer .layout .box ul li h3 {
+    font-size: 3vh;
+    color: rgba(255, 255, 255, 0.4);
+}
