@@ -53,7 +53,7 @@ let Footer = {
     },
     render: function () {
         let _this = this
-        $.getJSON('http://jirenguapi.applinzi.com/fm/getChannels.php')
+        $.getJSON('//jirenguapi.applinzi.com/fm/getChannels.php')
             .done(function (res) {
                 _this.renderFooter(res.channels)
             })
@@ -167,6 +167,14 @@ let Fm = {
         this.$container.find('.btn-next').on('click', function () {
             _this.loadMusic()
         })
+        this.$container.find('.progress-bar').on('click', function (e) {
+            let currentX = e.offsetX
+            let width = parseFloat($(this).css('width'))
+            let percent = Math.floor(currentX / width * 100)
+            // console.log(percent)
+            $(this).find('.current-bar').css('width', percent + '%')
+            _this.audio.currentTime = _this.audio.duration * percent / 100
+        })
         this.audio.addEventListener('play', function () {
             if (_this.statusInterval) {
                 clearInterval(_this.statusInterval)
@@ -181,7 +189,9 @@ let Fm = {
             }
             clearInterval(_this.statusInterval)
         })
-
+        this.audio.addEventListener('ended', function () {
+            _this.loadMusic()
+        })
     },
     loadMusic() {
         let _this = this

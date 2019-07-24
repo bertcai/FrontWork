@@ -126,6 +126,7 @@ main {
     height: .8vh;
     background: rgba(255, 255, 255, 0.4);
     border-radius: .2vh;
+    cursor: pointer;
 }
 
 .layout .detail .progress .progress-bar .current-bar {
