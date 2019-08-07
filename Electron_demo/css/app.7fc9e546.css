@@ -1,0 +1,1 @@
+.cell{border:1px solid #000;width:100px;height:100px;font-size:80px;-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center}.cell,.row{display:-webkit-box;display:-ms-flexbox;display:flex}.row{width:305px;-webkit-box-pack:justify;-ms-flex-pack:justify;justify-content:space-between}

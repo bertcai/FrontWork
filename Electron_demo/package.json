@@ -1,0 +1,15 @@
+{
+  "name": "Electron_demo",
+  "version": "1.0.0",
+  "main": "main.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "electron .",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder"
+  },
+  "devDependencies": {
+    "electron": "^6.0.0",
+    "electron-builder": "^21.1.5"
+  }
+}

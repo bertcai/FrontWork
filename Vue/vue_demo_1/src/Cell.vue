@@ -7,7 +7,7 @@
 
 <script>
 export default {
-  props: ["n"],
+  props: ["n", "result"],
   data() {
     return {
       flag: false,
@@ -19,9 +19,13 @@ export default {
       if (this.text !== "") {
         return;
       }
+      if (this.result) {
+        return;
+      }
       this.flag = true;
       this.text = this.n % 2 === 0 ? "x" : "o";
-      this.$emit("click", this.text);
+      let a = this.$emit("click", this.text);
+      console.log(a)
     }
   }
 };
