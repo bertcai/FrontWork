@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue v-bind Class Style</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <style>
+        .box {
+            width: 100px;
+            height: 100px;
+            margin: 10px;
+        }
+
+        .active {
+            background: blue;
+        }
+
+        .isBorder {
+            border: 3px solid pink;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <a :href="url">百度</a>
+        <div :class="{box:true,active:isActive}"></div>
+        <div :class="[box,active]"></div>
+        <div :style="{'width':width+'px','height':height+'px','backgroundColor':color}"></div>
+        <div :class='{box:true,isBorder:isBorder,active:isActive}' @click='isActive=!isActive'></div>
+    </div>
+    <script>
+        const app = new Vue({
+            el: '#app',
+            data() {
+                return {
+                    url: 'http://baidu.com',
+                    isActive: true,
+                    box: 'box',
+                    active: 'active',
+                    width: 300,
+                    height: 300,
+                    color: 'green'
+                }
+            },
+            computed: {
+                isBorder() {
+                    return !this.isActive
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
