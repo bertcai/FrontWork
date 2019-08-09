@@ -11,24 +11,36 @@
 <body>
     <div id="app">
         {{msg}}
+        <br>
+        差值表达式
+        <br>
+        3 > 6 ? msg : msg2
+        <br>
+        {{3 > 6 ? msg : msg2}}
     </div>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script>
         const app = new Vue({
             el: '#app',
-            data(){
-                return{
-                    msg:'Hello World !',
-                    msg2:'Bad Apple'
+            data() {
+                return {
+                    msg: 'Hello World !',
+                    msg2: 'Bad Apple'
                 }
             },
-            create:function(){
+            created: function () {
                 alert('create: 此时vue实例还未挂载')
             },
-            mounted:function(){
+            mounted: function () {
                 alert('mounted: vue实例挂载，等待数据渲染')
             }
         })
+        // 访问Vue实例属性
+        console.log(app.$el)
+        console.log(app.$data)
+        // 访问Vue Data属性
+        console.log(app.msg)
+        console.log(app.msg2)
     </script>
 </body>
 

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue Computed</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        str: {{str}}
+        <br>
+        reverseStr: {{reverseStr}}
+        <br>
+        FirstName: {{firstName}}
+        <br>
+        LastName: {{lastName}}
+        <br>
+        FullName: {{fullName}}
+        <br>
+        FullName2: {{fullName2}}
+    </div>
+    <script>
+        const App = new Vue({
+            el: '#app',
+            data() {
+                return {
+                    str: 'hello world1234567890',
+                    firstName: '',
+                    lastName: '',
+                    fullName2: ''
+                }
+            },
+            computed: {
+                reverseStr() {
+                    return this.str.split('').reverse().join('')
+                },
+                fullName: {
+                    get: function () {
+                        return this.firstName + ' ' + this.lastName
+                    },
+                    set: function (name) {
+                        let names = name.split(' ')
+                        this.firstName = names[0]
+                        this.lastName = names[names.length - 1]
+                    }
+                }
+            },
+            watch: {
+                firstName: function () {
+                    this.fullName2 = this.firstName + ' ' + this.lastName
+                },
+                lastName: function () {
+                    this.fullName2 = this.firstName + ' ' + this.lastName
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

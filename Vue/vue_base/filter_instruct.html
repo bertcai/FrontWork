@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue Filter and Instruct</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        .bg-red {
+            background: red;
+            height: 100px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        {{date|formatDate}}
+        <br>
+        v-text
+        <br>
+        <p v-text="msg"></p>
+        v-html
+        <div v-html="hMsg"></div>
+        v-bind
+        <div v-bind:class="style"></div>
+        v-on
+        <br>
+        <button @click="up">{{num}}</button>
+        <button @click="up">{{num}}</button>
+
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+        function plusZero(val) {
+            return val >= 10 ? val : '0' + val
+        }
+        const app = new Vue({
+            el: '#app',
+            data() {
+                return {
+                    date: new Date(),
+                    timer: null,
+                    msg: 'hello world',
+                    hMsg: '<h2>hello world</h2>',
+                    style: 'bg-red',
+                    num: 0
+                }
+            },
+            mounted() {
+                let _this = this
+                this.timer = setInterval(function () {
+                    _this.date = new Date()
+                }, 1000)
+            },
+            beforeDestroy() {
+                if (this.timer) {
+                    clearInterval(this.timer)
+                }
+            },
+            filters: {
+                formatDate(value) {
+                    let date = new Date(value)
+                    let year = date.getFullYear()
+                    let month = plusZero(date.getMonth() + 1)
+                    let day = plusZero(date.getDay())
+                    let hour = plusZero(date.getHours())
+                    let min = plusZero(date.getMinutes())
+                    let seconds = plusZero(date.getSeconds())
+                    return year + '-' + month + '-' + day + ' ' + hour + ':' + min + ':' + seconds
+                }
+            },
+            methods: {
+                // ???
+                // plusZero: function (val) {
+                //     return val >= 10 ? val : '0' + val
+                // }
+                up() {
+                    this.num++
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
