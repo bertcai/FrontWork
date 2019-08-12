@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue Instruct</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <style>
+        [v-clock] {
+            display: none;
+        }
+
+        .box {
+            width: 100px;
+            height: 100px;
+            background: lightgreen;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <div v-cloak>{{msg}}</div>
+        <hr>
+        v-once <br>
+        <p v-once>{{onceData}}</p>
+        <hr>
+        条件渲染指令 <br>
+        <div v-if="typeName === 'name'">
+            <input type="text" placeholder="Username" key="name">
+        </div>
+        <div v-if="typeName === 'password'">
+            <input type="password" placeholder="Password" key="password">
+        </div>
+        <button @click="toggleInput">toggle</button> <br>
+        v-show <br>
+        <div v-show="show">
+            v-show test
+        </div>
+        <button @click="show = !show">toggleShow</button>
+        <hr>
+        列表渲染指令 v-for <br>
+        <ul>
+            <li v-for="(item,index) in items">{{index}}------{{item}}</li>
+        </ul>
+        遍历对象---（v，i，k）
+        <ul>
+            <li v-for="(value,key,index) in family">{{index}}---{{key}}---{{value}}</li>
+        </ul>
+        <hr>
+        数组更新，过滤与排序 <br>
+        <ul>
+            <li v-for="item in items">{{item}}</li>
+        </ul>
+        <button @click="sortArr">sort</button>
+        <button @click="reverseArr">reverse</button>
+        <button @click="setValue">set</button>
+        <hr>
+        {{count}}
+        <br>
+        <button @click="addCount(1)">add1</button>
+        <button @click="addCount(8)">add8</button>
+        <hr>
+        修饰符 <br>
+        <!-- self只是作用在元素本身而非子元素的时候调用 -->
+        <div class="box" @click.self="clickF">
+            <button @click.stop="clickS">点我</button>
+            <!-- stop阻止事件冒泡 -->
+        </div>
+        <br>
+        prevent::提交事件并且不重载页面
+        <br>
+        <form action="#" @submit.prevent="submit">
+            <input type="text" name="name">
+            <input type="submit" value="提交" @keyup.13="submitKey">
+        </form>
+        <hr>
+        v-model <br>
+        <input type="text" v-model="input"> <br>
+        input:{{input}}
+    </div>
+    <script>
+        const app = new Vue({
+            el: '#app',
+            data() {
+                return {
+                    msg: '等待渲染的元素',
+                    onceData: '只渲染一次',
+                    typeName: 'name',
+                    show: true,
+                    items: ['apple', 'banana', 'cat'],
+                    family: {
+                        Dad: 'Daddy',
+                        Mom: 'Mommy',
+                        Child: 'Honey'
+                    },
+                    count: 0,
+                    input: ''
+                }
+            },
+            methods: {
+                toggleInput() {
+                    this.typeName = this.typeName === 'name' ? 'password' : 'name'
+                },
+                sortArr() {
+                    this.items.sort(function (a, b) {
+                        return a.length - b.length
+                    })
+                },
+                reverseArr() {
+                    this.items = this.items.reverse()
+                },
+                setValue() {
+                    Vue.set(this.items, 2, 'hhhhh')
+                },
+                addCount(temp = 1) {
+                    this.count += temp
+                },
+                clickF() {
+                    console.log('点击了父级元素')
+                },
+                clickS() {
+                    console.log('点击了子元素')
+                },
+                submit() {
+                    console.log('提交事件但是不触发页面重载')
+                },
+                submitKey() {
+                    console.log('您按下了“ENTER“按键')
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
