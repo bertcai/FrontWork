@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue Form and v-model</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+</head>
+
+<body>
+    <div id="app">
+        input textarea <br>
+        <input type="text" v-model.number.trim="msg1"><br>
+        input:{{msg1}} <br>
+        inputType:{{typeof msg1}} <br>
+        inputLength:{{strLength(msg1)}} <br>
+        <textarea name="page" id="" cols="30" rows="3" v-model.lazy="msg2"></textarea><br>
+        textarea:{{msg2}}
+        <hr>
+        单个单选框：<br>
+        win
+        <input type="radio" :checked="win"><br>
+        多个单选框组合：<br>
+        Star <input type="radio" name="music" v-model="music" value="Star">
+        Sea <input type="radio" name="music" v-model="music" value="Sea">
+        Winner <input type="radio" name="music" v-model="music" value="Winner"><br>
+        music:{{music}}
+        <hr>
+        复选框：<br>
+        是否成功
+        <input type="checkbox" name="success" v-model="success">
+        success:{{success}} <br>
+        复选框多个：<br>
+        Apple <input type="checkbox" name="fruit" v-model="fruits" value="Apple">
+        Banana <input type="checkbox" name="fruit" v-model="fruits" value="Banana">
+        Watermelon <input type="checkbox" name="fruit" v-model="fruits" value="Watermelon"><br>
+        fruits:{{fruits}}
+        <hr>
+        下拉菜单：
+        <select name="fruit" v-model="selectFruit">
+            <option value="Apple">Apple</option>
+            <option value="Banana">Banana</option>
+            <option value="Watermelon">Watermelon</option>
+        </select><br>
+        selectFruit:{{selectFruit}}
+        <br>
+        多选下拉菜单：
+        <select name="fruits" v-model="selectFruits" multiple>
+            <option value="Apple">Apple</option>
+            <option value="Banana">Banana</option>
+            <option value="Watermelon">Watermelon</option>
+        </select><br>
+        selectFruits:{{selectFruits}}
+
+    </div>
+    <script>
+        const app = new Vue({
+            el: '#app',
+            data() {
+                return {
+                    msg1: '',
+                    msg2: '',
+                    win: false,
+                    music: '',
+                    success: false,
+                    fruits: [],
+                    selectFruit: '',
+                    selectFruits: []
+                }
+            },
+            methods: {
+                strLength(str) {
+                    return str.length
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
