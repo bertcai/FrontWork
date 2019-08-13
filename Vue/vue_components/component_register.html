@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue Component Register</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <style>
+        table div {
+            background: lightblue;
+        }
+    </style>
+</head>
+
+<body>
+    <hr>
+    APP
+    <div id="app">
+        <component-all></component-all>
+        <component-app></component-app>
+    </div>
+    <hr>
+    BPP
+    <div id="bpp">
+        <component-all></component-all>
+        <component-app></component-app>
+        <table>
+            table里只能有tr td tbody
+            <component-all></component-all>
+        </table>
+        <table>
+            使用is属性，让组件在table里生效
+            <tbody is="component-all"></tbody>
+        </table>
+    </div>
+    <script>
+        Vue.component('component-all', {
+            template: '<div>我是一个全局组件</div>'
+        })
+        const app = new Vue({
+            el: '#app',
+            components: {
+                'component-app': {
+                    template: '<div>我是一个局部组件，定义在app里</div>'
+                }
+            }
+        })
+        const bpp = new Vue({
+            el: '#bpp'
+        })
+    </script>
+</body>
+
+</html>

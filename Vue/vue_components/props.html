@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue Props</title>
+    <style>
+        div {
+            border: 1px solid red;
+            padding: 30px;
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        父组件
+        <input type="text" v-model="msg">
+        <son-component :msg="msg"></son-component>
+    </div>
+    <script>
+        const app = new Vue({
+            el: '#app',
+            data() {
+                return {
+                    msg: ''
+                }
+            },
+            components: {
+                'son-component': {
+                    template: '<div>子组件MSG内容:{{msg}}</div>',
+                    props: ['msg']
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
