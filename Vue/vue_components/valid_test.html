@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue Props 3</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <style>
+        #app {
+            width: 800px;
+            height: 600px;
+            border: 2px solid black;
+            text-align: center;
+            padding: 20px;
+        }
+
+        div {
+            margin: 0 auto;
+            margin-top: 20px;
+            padding: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        父组件 <br>
+        <son-component :a="a" :c="c" :d="d" :e="e" :f="f"></son-component>
+    </div>
+    <script>
+        const app = new Vue({
+            el: '#app',
+            data() {
+                return {
+                    a: 1 + 'ss',
+                    b: 'str',
+                    c: [3, 2, 1],
+                    d: {
+                        n: 'bbb'
+                    },
+                    e: 3,
+                    f: console.log('log something')
+                }
+            },
+            components: {
+                'son-component': {
+                    template: '<div>{{a}}-----{{b}}-----{{c}}-----{{d}}-----{{e}}------{{f}}</div>',
+                    props: {
+                        a: {
+                            type: Number
+                        },
+                        b: {
+                            type: String,
+                            required: true
+                        },
+                        c: {
+                            type: Array,
+                            default: function () {
+                                return [1]
+                            }
+                        },
+                        d: {
+                            type: Object,
+                            default: function () {
+                                return {
+                                    a: 'aaaa'
+                                }
+                            }
+                        },
+                        e: {
+                            validator: function (value) {
+                                return value > 10
+                            }
+                        },
+                        f: {
+                            type: Function
+                        }
+                    }
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

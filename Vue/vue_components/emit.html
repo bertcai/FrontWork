@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue $emit </title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <style>
+        #app {
+            width: 800px;
+            height: 600px;
+            border: 2px solid black;
+            text-align: center;
+            padding: 20px;
+        }
+
+        div {
+            margin: 0 auto;
+            margin-top: 20px;
+            padding: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        父组件 <br>
+        您的银行卡余额：{{total}}
+        <son-component @change="handleChange"></son-component>
+    </div>
+    <script>
+        const app = new Vue({
+            el: '#app',
+            data() {
+                return {
+                    total: 1000
+                }
+            },
+            components: {
+                'son-component': {
+                    template: `
+                    <div>
+                        <button @click="increase">+1000</button>
+                        <button @click="decrease">-1000</button>
+                    </div>
+                    `,
+                    data() {
+                        return {
+                            count: 1000
+                        }
+                    },
+                    methods: {
+                        increase() {
+                            this.count += 1000
+                            this.$emit('change', this.count)
+                        },
+                        decrease() {
+                            this.count -= 1000
+                            this.$emit('change', this.count)
+                        }
+                    }
+                }
+            },
+            methods: {
+                handleChange(value) {
+                    this.total = value
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

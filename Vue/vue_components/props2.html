@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue Props 2</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <style>
+        #app {
+            width: 800px;
+            height: 600px;
+            border: 2px solid black;
+            text-align: center;
+            padding: 20px;
+        }
+
+        div {
+            margin: 0 auto;
+            margin-top: 20px;
+            padding: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        父组件 <br>
+        <input type="text" v-model="msg">
+        <input type="text" v-model="width" placeholder="请输入子组件宽度">
+        <son-component :msg="msg" :width="width"></son-component>
+    </div>
+    <script>
+        const app = new Vue({
+            el: '#app',
+            data() {
+                return {
+                    msg: '',
+                    width: ''
+                }
+            },
+            components: {
+                'son-component': {
+                    template: '<div :style="style">子组件MSG内容:{{msg}}</div>',
+                    props: ['msg', 'width'],
+                    computed: {
+                        style() {
+                            return {
+                                width: this.width + 'px',
+                                height: '30px',
+                                background: 'lightyellow'
+                            }
+                        }
+                    }
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

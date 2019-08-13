@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue Component Post Message</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <style>
+        #app {
+            width: 800px;
+            height: 600px;
+            border: 2px solid black;
+            text-align: center;
+            padding: 20px;
+        }
+
+        div {
+            margin: 0 auto;
+            margin-top: 20px;
+            padding: 5px;
+            border: 1px solid #444;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        父级数据：{{msg}} <br>
+        <component-a ref='a'></component-a>
+        <component-b ref='b'></component-b>
+        <hr>
+        <component-c ref='c'></component-c>
+        <hr>
+        <button @click="change('a')">修改子级数据A</button>
+        <button @click="change('b')">修改子级数据B</button>
+        <button @click="change('c')">修改子级数据C</button>
+    </div>
+    <script>
+        Vue.component('component-a', {
+            template: '<div><button @click="sendMessage">点击向B发送数据</button><br>组件A中的数据：{{msg}}</div>',
+            data() {
+                return {
+                    msg: 'A中的数据！'
+                }
+            },
+            methods: {
+                sendMessage() {
+                    this.$root.bus.$emit('send', this.msg)
+                }
+            }
+        })
+        Vue.component('component-b', {
+            template: '<div>B的数据：{{msg}}</div>',
+            data() {
+                return {
+                    msg: ''
+                }
+            },
+            created() {
+                let _this = this
+                this.$root.bus.$on('send', function (value) {
+                    alert(value)
+                    _this.msg = value
+                })
+            }
+        })
+        Vue.component('component-c', {
+            template: '<div><button @click="change">点击修改父级数据</button><br>组件A中的数据：{{msg}}</div>',
+            data() {
+                return {
+                    msg: 'C中的数据！'
+                }
+            },
+            methods: {
+                change() {
+                    this.$parent.msg = '父级数据已修改'
+                }
+            }
+        })
+        const app = new Vue({
+            el: '#app',
+            data() {
+                return {
+                    bus: new Vue(),
+                    msg: '父级数据'
+                }
+            },
+            methods: {
+                change(val) {
+                    this.$refs[val].msg = val + '中的数据被修改'
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
