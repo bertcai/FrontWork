@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue Scope Slot</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <style>
+        #app {
+            width: 800px;
+            height: 600px;
+            border: 2px solid black;
+            text-align: center;
+            padding: 20px;
+        }
+
+        div {
+            margin: 0 auto;
+            margin-top: 20px;
+            padding: 5px;
+            border: 1px solid #444;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <component-a>
+            <template v-slot:header="slotProps">
+                <div>Header sss{{slotProps.msg}}</div>
+            </template>
+            <template v-slot:main="slotProps">
+                <div>Main</div>
+            </template>
+            <template v-slot:footer>
+                <div>Footer</div>
+            </template>
+            <div>默认插槽</div>
+            <div>默认插槽</div>
+        </component-a>
+        <component-b>
+            <div>默认插槽</div>
+            <div>默认插槽</div>
+            <div>默认插槽</div>
+            <div>默认插槽</div>
+        </component-b>
+    </div>
+    <script>
+        Vue.component('component-a', {
+            template: `<div>
+                        component-a
+                        <div><slot></slot></div>
+                        <slot name="header" v-bind:msg="msg"></slot>
+                        <slot name="main"></slot>
+                        <slot name="footer"></slot>
+                    </div>`,
+            data() {
+                return {
+                    msg: '我是子组件中的作用域插槽的msg'
+                }
+            },
+            mounted() {
+                let header = this.$scopedSlots.header()
+                console.log(header)
+                let text = header[0].children[0].text
+                console.log(text)
+            }
+        })
+        Vue.component('component-b', {
+            template: `<div>
+                        component-b
+                        <slot></slot>
+                    </div>`
+        })
+        const app = new Vue({
+            el: '#app',
+            data() {
+                return {
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

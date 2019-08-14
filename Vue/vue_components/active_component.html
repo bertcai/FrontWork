@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue Active Component</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <style>
+        #app {
+            width: 800px;
+            height: 600px;
+            border: 2px solid black;
+            text-align: center;
+            padding: 20px;
+        }
+
+        div {
+            margin: 0 auto;
+            margin-top: 20px;
+            padding: 5px;
+            border: 1px solid #444;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <component :is="thisView"></component>
+        <button @click="changeView('A')">ViewA</button>
+        <button @click="changeView('B')">ViewB</button>
+        <button @click="changeView('C')">ViewC</button>
+        <button @click="changeView('D')">ViewD</button>
+    </div>
+    <script>
+        Vue.component('componentA', {
+            template: '<div>组件A</div>'
+        })
+        Vue.component('componentB', {
+            template: '<div>组件B</div>'
+        })
+        Vue.component('componentC', {
+            template: '<div>组件C</div>'
+        })
+        Vue.component('componentD', {
+            template: '<div>组件D</div>'
+        })
+        const app = new Vue({
+            el: '#app',
+            data() {
+                return {
+                    thisView: 'componentA'
+                }
+            },
+            methods: {
+                changeView(tag) {
+                    // console.log(tag)
+                    this.thisView = 'component' + tag
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
