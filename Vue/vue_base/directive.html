@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue Custom Directive</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <style>
+        #app {
+            width: 800px;
+            height: 600px;
+            border: 2px solid black;
+            text-align: center;
+            padding: 20px;
+        }
+
+        div {
+            margin: 0 auto;
+            margin-top: 20px;
+            padding: 5px;
+            border: 1px solid #444;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        页面加载时，该元素将获得焦点 <input type="text" v-focus> <br>
+        <hr>
+        自定义指令参数demo
+        <div v-demo.a.b:args="obj"></div>
+    </div>
+    <script>
+        Vue.directive('focus', {
+            inserted: function (el) {
+                el.focus()
+            }
+        })
+        Vue.directive('demo', {
+            bind: function (el, binding, vNode) {
+                let str = ''
+                for (let key in vNode) {
+                    str += '--' + key
+                }
+                el.innerHTML = `
+                Name: ${binding.name}<br>
+                Value: ${binding.value}<br>
+                expression: ${binding.expression}<br>
+                arg: ${binding.arg}<br>
+                modifiers: ${JSON.stringify(binding.modifiers)}<br>
+                vNode: ${str}<br>
+                `
+            }
+        })
+        const app = new Vue({
+            el: '#app',
+            data() {
+                return {
+                    obj: '指令绑定的值'
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
