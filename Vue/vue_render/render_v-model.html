@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue Render v-model</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <style>
+        #app {
+            width: 800px;
+            height: 600px;
+            border: 2px solid black;
+            text-align: center;
+            padding: 20px;
+        }
+
+        div {
+            margin: 0 auto;
+            margin-top: 20px;
+            padding: 5px;
+            border: 1px solid #444;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        {{name}}
+        <br>
+        <child level='3' :name="name" @input="handleChange">
+        </child>
+        <child level='3' :name="name" v-model="name">
+        </child>
+    </div>
+    <script>
+        Vue.component('child', {
+            props: ['level', 'name'],
+            render: function (createElement) {
+                let self = this
+                return createElement('input', {
+                    domProps: {
+                        value: self.name
+                    },
+                    on: {
+                        input: function (event) {
+                            self.$emit('input', event.target.value)
+                        }
+                    }
+                })
+            },
+        })
+        const app = new Vue({
+            el: '#app',
+            data() {
+                return {
+                    obj: '指令绑定的值',
+                    show: true,
+                    name: '初始值'
+                }
+            },
+            methods: {
+                handleChange(value) {
+                    this.name = value
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

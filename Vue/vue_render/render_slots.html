@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue Render Slots</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <style>
+        #app {
+            width: 800px;
+            height: 600px;
+            border: 2px solid black;
+            text-align: center;
+            padding: 20px;
+        }
+
+        div {
+            margin: 0 auto;
+            margin-top: 20px;
+            padding: 5px;
+            border: 1px solid #444;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <child level='3'>
+            <p>潮汐猎人</p>
+            <template v-slot:header>
+                <div>我能吃下一只凤尾鱼</div>
+            </template>
+            <template v-slot:footer>
+                <div>希望比昆卡的手下好</div>
+            </template>
+            <template v-slot:body>
+                <div>我还能吃下一颗海葡萄</div>
+            </template>
+        </child>
+    </div>
+    <script>
+        Vue.component('child', {
+            render: function (createElement) {
+                return createElement('h' + this.level,
+                    [
+                        createElement('header', this.$slots.header),
+                        createElement('main', this.$slots.body),
+                        createElement('footer', this.$slots.footer)
+                    ])
+            },
+            props: ['level']
+        })
+        const app = new Vue({
+            el: '#app',
+            data() {
+                return {
+                    obj: '指令绑定的值'
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
