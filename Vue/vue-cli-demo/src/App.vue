@@ -1,17 +1,16 @@
 <template>
   <div id="app">
     <img alt="Vue logo" src="./assets/logo.png" />
-    <list></list>
-    <router-view></router-view>
-    <button @click="getData()">获取数据</button>
-    <ul>
-      <li v-for="item in data" :key="item.id">{{item.title}}</li>
-    </ul>
+    <Parent />
+    <hr>
+    <Out />
   </div>
 </template>
 
 <script>
 import List from "./components/List";
+import Parent from "./components/Parent";
+import Out from "./components/Out";
 export default {
   name: "app",
   data() {
@@ -20,7 +19,9 @@ export default {
     };
   },
   components: {
-    List
+    List,
+    Parent,
+    Out
   },
   methods: {
     getData() {
