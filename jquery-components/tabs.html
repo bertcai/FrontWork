@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Carousel Demo</title>
+    <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            padding: 20px;
+        }
+
+        .tab-box {
+            border: 1px solid #aaa;
+            width: 400px;
+        }
+
+        .tabs {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .tabs li {
+            display: inline-block;
+            text-align: center;
+            padding: 5px 10px;
+            flex: 1;
+            border-bottom: 1px solid #aaa;
+            cursor: pointer;
+        }
+
+        .tabs li:not(:first-child) {
+            border-left: 1px solid #aaa;
+        }
+
+        .tabs li.active {
+            background: #eee;
+        }
+
+        .panel {
+            padding: 10px;
+            height: 300px;
+            display: none;
+        }
+
+        .panel.active {
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="tab-box">
+        <ul class="tabs">
+            <li class="active">tab1</li>
+            <li>tab2</li>
+            <li>tab3</li>
+        </ul>
+        <div class="panel active">content1</div>
+        <div class="panel">content2</div>
+        <div class="panel">content3</div>
+    </div>
+    <br>
+    <div class="tab-box">
+        <ul class="tabs">
+            <li class="active">tab1</li>
+            <li>tab2</li>
+            <li>tab3</li>
+        </ul>
+        <div class="panel active">content1</div>
+        <div class="panel">content2</div>
+        <div class="panel">content3</div>
+    </div>
+    <script>
+        function Tabs($ct) {
+            this.init($ct)
+            this.bind()
+        }
+
+        Tabs.prototype = {
+            init($ct) {
+                this.$ct = $ct
+                this.$tabs = this.$ct.find('.tabs>li')
+                this.$panels = this.$ct.find('.panel')
+                this.index = 0
+            },
+
+            bind() {
+                let _this = this
+                this.$tabs.on('click', function () {
+                    _this.index = $(this).index()
+                    _this.change(_this.index)
+                })
+            },
+            change(target) {
+                this.$tabs.eq(target).addClass('active').siblings().removeClass('active')
+                this.$panels.eq(target).addClass('active').siblings().removeClass('active')
+            }
+        }
+
+        let a = new Tabs($('.tab-box').eq(0))
+        new Tabs($('.tab-box').eq(1))
+    </script>
+</body>
+
+</html>

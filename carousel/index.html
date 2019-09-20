@@ -104,10 +104,10 @@
 <body>
     <div class="carousel">
         <ul class="img-ct clearfix">
-            <li><a href="#"><img src="./assets/1.png"></a></li>
-            <li><a href="#"><img src="./assets/2.png"></a></li>
-            <li><a href="#"><img src="./assets/3.png"></a></li>
-            <li><a href="#"><img src="./assets/4.png"></a></li>
+            <li><a href="#"><img src="https://s2.ax1x.com/2019/09/20/njlR78.png"></a></li>
+            <li><a href="#"><img src="https://s2.ax1x.com/2019/09/20/njlfAS.png"></a></li>
+            <li><a href="#"><img src="https://s2.ax1x.com/2019/09/20/njlgnP.png"></a></li>
+            <li><a href="#"><img src="https://s2.ax1x.com/2019/09/20/njl20f.png"></a></li>
         </ul>
         <a href="#" class="pre btn"><i class="iconfont icon-back"></i></a>
         <a href="#" class="next btn"><i class="iconfont icon-forward"></i></a>
@@ -121,10 +121,27 @@
     <br>
     <div class="carousel">
         <ul class="img-ct clearfix">
-            <li><a href="#"><img src="./assets/1.png"></a></li>
-            <li><a href="#"><img src="./assets/2.png"></a></li>
-            <li><a href="#"><img src="./assets/3.png"></a></li>
-            <li><a href="#"><img src="./assets/4.png"></a></li>
+            <li><a href="#"><img src="https://s2.ax1x.com/2019/09/20/njlR78.png"></a></li>
+            <li><a href="#"><img src="https://s2.ax1x.com/2019/09/20/njlfAS.png"></a></li>
+            <li><a href="#"><img src="https://s2.ax1x.com/2019/09/20/njlgnP.png"></a></li>
+            <li><a href="#"><img src="https://s2.ax1x.com/2019/09/20/njl20f.png"></a></li>
+        </ul>
+        <a href="#" class="pre btn"><i class="iconfont icon-back"></i></a>
+        <a href="#" class="next btn"><i class="iconfont icon-forward"></i></a>
+        <ul class="switch">
+            <li class="active"></li>
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul>
+    </div>
+    <br>
+    <div class="carousel">
+        <ul class="img-ct clearfix">
+            <li><a href="#"><img src="https://s2.ax1x.com/2019/09/20/njlR78.png"></a></li>
+            <li><a href="#"><img src="https://s2.ax1x.com/2019/09/20/njlfAS.png"></a></li>
+            <li><a href="#"><img src="https://s2.ax1x.com/2019/09/20/njlgnP.png"></a></li>
+            <li><a href="#"><img src="https://s2.ax1x.com/2019/09/20/njl20f.png"></a></li>
         </ul>
         <a href="#" class="pre btn"><i class="iconfont icon-back"></i></a>
         <a href="#" class="next btn"><i class="iconfont icon-forward"></i></a>
@@ -216,7 +233,7 @@
             setSwitch() {
                 this.$switches.eq(this.index).addClass('active').siblings().removeClass('active')
             },
-            autoPlay(time=1000) {
+            autoPlay(time = 1000) {
                 this.play = setInterval(() => {
                     this.playNext()
                 }, time)
@@ -230,6 +247,7 @@
 
         let a = new Carousel($('.carousel').eq(0))
         new Carousel($('.carousel').eq(1))
+        new Carousel($('.carousel').eq(2))
 
     </script>
 </body>
