@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Carousel Demo</title>
+    <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://at.alicdn.com/t/font_1307914_k45hxkkw9v.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        ul,
+        li {
+            list-style: none;
+            display: inline-block;
+        }
+
+        .carousel {
+            width: 300px;
+            height: 200px;
+            margin: 0 auto;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .carousel .img-ct {
+            position: absolute;
+        }
+
+        .clearfix::after {
+            content: '';
+            display: block;
+            clear: both;
+        }
+
+        .carousel .img-ct li {
+            float: left;
+        }
+
+        img {
+            width: 300px;
+            height: 200px;
+        }
+
+        .carousel .pre {
+            position: absolute;
+            left: 5px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: rgba(255, 2552, 255, 0.8);
+        }
+
+        .carousel .next {
+            position: absolute;
+            right: 5px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: rgba(255, 2552, 255, 0.8);
+        }
+
+        .iconfont {
+            font-size: 60px;
+        }
+
+        .btn:hover {
+            color: #fff;
+        }
+
+        .switch {
+            position: absolute;
+            bottom: 10px;
+            text-align: center;
+            width: 100%;
+        }
+
+        .switch li {
+            display: inline-block;
+            background-color: rgba(255, 2552, 255, 0.6);
+            width: 20px;
+            height: 5px;
+            border-radius: 2px;
+            cursor: pointer;
+        }
+
+        .switch li:hover {
+            background-color: #fff;
+        }
+
+        .switch .active {
+            background-color: #fff;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="carousel">
+        <ul class="img-ct clearfix">
+            <li><a href="#"><img src="./assets/1.png"></a></li>
+            <li><a href="#"><img src="./assets/2.png"></a></li>
+            <li><a href="#"><img src="./assets/3.png"></a></li>
+            <li><a href="#"><img src="./assets/4.png"></a></li>
+        </ul>
+        <a href="#" class="pre btn"><i class="iconfont icon-back"></i></a>
+        <a href="#" class="next btn"><i class="iconfont icon-forward"></i></a>
+        <ul class="switch">
+            <li class="active"></li>
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul>
+    </div>
+    <br>
+    <div class="carousel">
+        <ul class="img-ct clearfix">
+            <li><a href="#"><img src="./assets/1.png"></a></li>
+            <li><a href="#"><img src="./assets/2.png"></a></li>
+            <li><a href="#"><img src="./assets/3.png"></a></li>
+            <li><a href="#"><img src="./assets/4.png"></a></li>
+        </ul>
+        <a href="#" class="pre btn"><i class="iconfont icon-back"></i></a>
+        <a href="#" class="next btn"><i class="iconfont icon-forward"></i></a>
+        <ul class="switch">
+            <li class="active"></li>
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul>
+    </div>
+    <script>
+        function Carousel($ct) {
+            this.init($ct)
+            this.bind()
+        }
+
+        Carousel.prototype = {
+            init: function ($ct) {
+                this.$ct = $ct
+                this.$imgCt = this.$ct.find('.img-ct')
+                this.$imgs = this.$ct.find('.img-ct>li')
+                this.$preBtn = this.$ct.find('.pre')
+                this.$nextBtn = this.$ct.find('.next')
+                this.$switches = this.$ct.find('.switch li')
+                this.imgWidth = this.$imgs.width()
+                this.imgCount = this.$imgs.length
+                this.index = 0
+                this.play = null
+
+                this.$imgCt.append(this.$imgs.first().clone())
+                this.$imgCt.prepend(this.$imgs.last().clone())
+                this.$imgCt.width((this.imgCount + 2) * this.imgWidth)
+                this.$imgCt.css('left', -this.imgWidth)
+            },
+            bind: function () {
+                let _this = this
+                this.$preBtn.on('click', function () {
+                    console.log('pre')
+                    _this.playPre()
+                })
+                this.$nextBtn.on('click', function () {
+                    console.log('next')
+                    _this.playNext()
+                })
+                this.$switches.on('click', function () {
+                    console.log('click ' + $(this).index())
+                    _this.switchTo($(this).index())
+                })
+            },
+            playPre() {
+                let _this = this
+                this.$imgCt.animate({
+                    left: '+=' + _this.imgWidth
+                }, function () {
+                    _this.index--
+                    if (_this.index < 0) {
+                        _this.$imgCt.css('left', -_this.imgWidth * _this.imgCount)
+                        _this.index = _this.imgCount - 1
+                    }
+                    _this.setSwitch()
+                })
+
+            },
+            playNext() {
+                let _this = this
+                this.$imgCt.animate({
+                    left: '-=' + _this.imgWidth
+                }, function () {
+                    _this.index++
+                    if (_this.index === _this.imgCount) {
+                        _this.$imgCt.css('left', -_this.imgWidth)
+                        _this.index = 0
+                    }
+                    _this.setSwitch()
+                })
+
+            },
+            switchTo(target) {
+                let _this = this
+                console.log(target, this.index, this.imgWidth)
+                let move = (target - this.index) * this.imgWidth
+                console.log(move)
+                this.$imgCt.animate({
+                    left: '-=' + move
+                })
+                this.index = target
+                this.setSwitch()
+            },
+            setSwitch() {
+                this.$switches.eq(this.index).addClass('active').siblings().removeClass('active')
+            },
+            autoPlay(time=1000) {
+                this.play = setInterval(() => {
+                    this.playNext()
+                }, time)
+            },
+            stop() {
+                if (this.play) {
+                    clearInterval(this.play)
+                }
+            }
+        }
+
+        let a = new Carousel($('.carousel').eq(0))
+        new Carousel($('.carousel').eq(1))
+
+    </script>
+</body>
+
+</html>
