@@ -1,0 +1,19 @@
+extends layout
+
+block content
+
+  h1 作者: #{author.name}
+  p #{author.date_of_birth_formatted} - #{author.date_of_death_formatted}
+
+  div(style='margin-left:20px;margin-top:20px')
+
+    h4 图书
+
+    dl
+      each book in author_books
+        dt
+          a(href=book.url) #{book.title}
+        dd #{book.summary}
+
+      else
+        p 这个作者没有图书。
