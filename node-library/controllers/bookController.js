@@ -1,6 +1,43 @@
-const Book = require('../models/book');
+var Book = require('../models/book');
+var Author = require('../models/author');
+var Genre = require('../models/genre');
+var BookInstance = require('../models/bookinstance');
 
-exports.index = (req, res) => { res.send('未实现：站点首页'); };
+var async = require('async');
+
+exports.index = function (req, res) {
+    async.parallel({
+        book_count: function (callback) {
+            Book.countDocuments({}).then((count) => {
+                callback(null, count);
+            });
+        },
+        book_instance_count: function (callback) {
+            BookInstance.countDocuments({}).then((count) => {
+                callback(null, count);
+            });
+        },
+        book_instance_available_count: function (callback) {
+            BookInstance.countDocuments({ status: 'Available' }).then((count) => {
+                callback(null, count);
+            });
+        },
+        author_count: function (callback) {
+            Author.countDocuments({}).then((count) => {
+                callback(null, count);
+            });
+        },
+        genre_count: function (callback) {
+            Genre.countDocuments({}).then((count) => {
+                callback(null, count);
+            });
+        },
+    }, function (err, results) {
+        console.log(results);
+        res.render('index', { title: '本地图书馆', error: err, data: results });
+    });
+};
+
 
 // 显示完整的藏书列表
 exports.book_list = (req, res, next) => { res.send('未实现：藏书列表'); };
