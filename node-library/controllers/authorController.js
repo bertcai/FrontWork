@@ -1,7 +1,14 @@
 const Author = require('../models/author');
 
 // 显示完整的作者列表
-exports.author_list = (req, res) => { res.send('未实现：作者列表'); };
+exports.author_list = (req, res) => { 
+    Author.find()
+        .sort([['family_name', 'ascending']])
+        .then((list_authors) => {
+            res.render('author_list', { title: '作者列表', author_list: list_authors });
+        }
+    );
+ };
 
 // 为每位作者显示详细信息的页面
 exports.author_detail = (req, res) => { res.send('未实现：作者详细信息：' + req.params.id); };
