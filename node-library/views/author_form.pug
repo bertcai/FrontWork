@@ -1,0 +1,24 @@
+extends layout 
+
+block content
+  h1 #{title}
+
+  form(method='POST' action='')
+    div.form-group
+      label(for='first_name') 名字:
+      input#first_name.form-control(type='text', name='first_name' value=(undefined===author ? '' : author.first_name))
+    div.form-group
+      label(for='family_name') 姓氏:
+      input#family_name.form-control(type='text', name='family_name' value=(undefined===author ? '' : author.family_name))
+    div.form-group
+      label(for='date_of_birth') 生日:
+      input#date_of_birth.form-control(type='date', name='date_of_birth' value=(undefined===author ? '' : author.date_of_birth))
+    div.form-group
+      label(for='date_of_death') 死亡日期:
+      input#date_of_death.form-control(type='date', name='date_of_death' value=(undefined===author ? '' : author.date_of_death))
+    button.btn.btn-primary(type='submit') 提交
+
+  if errors
+    ul
+      for error in errors
+        li(style='color:red') #{error.msg}
