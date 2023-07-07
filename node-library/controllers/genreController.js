@@ -1,6 +1,7 @@
 const Genre = require('../models/genre');
 const Book = require('../models/book');
 const async = require('async');
+const { body, validationResult } = require('express-validator');
 
 // 显示完整的藏书类别列表
 exports.genre_list = (req, res, next) => {
@@ -40,10 +41,43 @@ exports.genre_detail = (req, res, next) => {
 }
 
 // 由 GET 显示创建藏书类别的表单
-exports.genre_create_get = (req, res, next) => { res.send('未实现：藏书类别创建表单的 GET'); }
+exports.genre_create_get = (req, res, next) => {
+    res.render('genre_form', { title: '创建藏书类别' });
+}
 
 // 由 POST 处理藏书类别创建操作
-exports.genre_create_post = (req, res, next) => { res.send('未实现：创建藏书类别的 POST'); }
+exports.genre_create_post = [
+    // 对 name 字段进行验证
+    body('name', '藏书类别名不能为空').isLength({ min: 1 }).trim(),
+
+    // 对 name 字段进行去除首尾空格及转义
+    body('name').trim().escape(),
+
+    // 处理请求
+    (req, res, next) => {
+        const errors = validationResult(req);
+
+        // 创建 Genre 对象
+        const genre = new Genre({ name: req.body.name });
+
+        if (!errors.isEmpty()) {
+            res.render('genre_form', { title: '创建藏书类别', genre: genre, errors: errors.array() });
+            return;
+        } else {
+            Genre.findOne({ 'name': req.body.name })
+                .then((found_genre) => {
+                    if (found_genre) {
+                        res.redirect(found_genre.url);
+                    } else {
+                        genre.save()
+                            .then(() => {
+                                res.redirect(genre.url);
+                            });
+                    }
+                })
+        }
+    }
+]
 
 // 由 GET 显示删除藏书类别的表单
 exports.genre_delete_get = (req, res, next) => { res.send('未实现：藏书类别删除表单的 GET'); }
