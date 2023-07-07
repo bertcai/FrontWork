@@ -1,0 +1,20 @@
+extends layout
+
+block content
+
+  h1 ID: #{bookinstance._id}
+
+  p #[strong 书名:]
+    a(href=bookinstance.book.url) #{bookinstance.book.title}
+  p #[strong 出版信息:] #{bookinstance.imprint}
+
+  p #[strong 当前状态: ]
+    if bookinstance.status=='Available'
+      span.text-success #{bookinstance.status}
+    else if bookinstance.status=='Maintenance'
+      span.text-danger #{bookinstance.status}
+    else
+      span.text-warning #{bookinstance.status}
+
+  if bookinstance.status!='Available'
+    p #[strong 归还日期:] #{bookinstance.due_back_formatted}

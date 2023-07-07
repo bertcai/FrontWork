@@ -7,11 +7,23 @@ exports.bookinstance_list = (req, res, next) => {
         .then((list_bookinstances) => {
             res.render('bookinstance_list', { title: '藏书副本列表', bookinstance_list: list_bookinstances });
         }
-    );
+        );
 }
 
 // 为藏书的每一本副本显示详细信息的页面
-exports.bookinstance_detail = (req, res, next) => { res.send('未实现：藏书副本详细信息：' + req.params.id); };
+exports.bookinstance_detail = (req, res, next) => {
+    BookInstance.findById(req.params.id)
+        .populate('book')
+        .then((bookinstance) => {
+            if (bookinstance == null) {
+                const err = new Error('未找到藏书副本');
+                err.status = 404;
+                return next(err);
+            }
+            res.render('bookinstance_detail', { title: '藏书副本详情', bookinstance: bookinstance });
+        }
+        );
+};
 
 // 由 GET 显示创建藏书副本的表单
 exports.bookinstance_create_get = (req, res, next) => { res.send('未实现：藏书副本创建表单的 GET'); };
