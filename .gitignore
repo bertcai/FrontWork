@@ -87,3 +87,5 @@ typings/
 
 # DynamoDB Local files
 .dynamodb/
+node-library/populatedb.js
+node-library/secret.js
