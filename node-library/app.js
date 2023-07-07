@@ -6,6 +6,7 @@ let logger = require('morgan');
 
 let indexRouter = require('./routes/index');
 let usersRouter = require('./routes/users');
+const catalogRouter = require('./routes/catalog');  // 导入 catalog 路由
 
 let app = express();
 
@@ -29,6 +30,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/catalog',catalogRouter);  // 将 catalog 路由添加进中间件链
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
