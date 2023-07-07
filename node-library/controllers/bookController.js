@@ -40,17 +40,44 @@ exports.index = function (req, res) {
 
 
 // 显示完整的藏书列表
-exports.book_list = (req, res, next) => { 
-    Book.find({}, {title: 1, author: 1})
+exports.book_list = (req, res, next) => {
+    Book.find({}, { title: 1, author: 1 })
         .populate('author')
         .then((list_books) => {
             res.render('book_list', { title: '藏书列表', book_list: list_books });
         }
-    );
+        );
 };
 
 // 为每本藏书显示详细信息的页面
-exports.book_detail = (req, res, next) => { res.send('未实现：藏书详细信息：' + req.params.id); };
+exports.book_detail = (req, res, next) => {
+    async.parallel({
+        book: function (callback) {
+            Book.findById(req.params.id)
+                .populate('author')
+                .populate('genre')
+                .then((book) => {
+                    callback(null, book);
+                }
+                );
+        },
+        book_instance: function (callback) {
+            BookInstance.find({ 'book': req.params.id })
+                .then((bookinstances) => {
+                    callback(null, bookinstances);
+                }
+                );
+        },
+    }, function (err, results) {
+        if (err) { return next(err); }
+        if (results.book == null) {
+            const err = new Error('未找到该藏书');
+            err.status = 404;
+            return next(err);
+        }
+        res.render('book_detail', { title: results.book.title, book: results.book, book_instances: results.book_instance });
+    });
+};
 
 // 由 GET 显示创建藏书的表单
 exports.book_create_get = (req, res, next) => { res.send('未实现：藏书创建表单的 GET'); };
