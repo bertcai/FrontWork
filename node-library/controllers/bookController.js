@@ -40,7 +40,14 @@ exports.index = function (req, res) {
 
 
 // 显示完整的藏书列表
-exports.book_list = (req, res, next) => { res.send('未实现：藏书列表'); };
+exports.book_list = (req, res, next) => { 
+    Book.find({}, {title: 1, author: 1})
+        .populate('author')
+        .then((list_books) => {
+            res.render('book_list', { title: '藏书列表', book_list: list_books });
+        }
+    );
+};
 
 // 为每本藏书显示详细信息的页面
 exports.book_detail = (req, res, next) => { res.send('未实现：藏书详细信息：' + req.params.id); };
