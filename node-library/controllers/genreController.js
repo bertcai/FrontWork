@@ -1,7 +1,14 @@
 const Genre = require('../models/genre');
 
 // 显示完整的藏书类别列表
-exports.genre_list = (req, res, next) => { res.send('未实现：藏书类别列表'); }
+exports.genre_list = (req, res, next) => { 
+    Genre.find()
+        .sort([['name', 'ascending']])
+        .then((list_genres) => {
+            res.render('genre_list', { title: '藏书类别列表', genre_list: list_genres });
+        }
+    );
+ }
 
 // 为每一类藏书显示详细信息的页面
 exports.genre_detail = (req, res, next) => { res.send('未实现：藏书类别详细信息：' + req.params.id); }
