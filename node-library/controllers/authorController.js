@@ -133,7 +133,51 @@ exports.author_delete_post = (req, res) => {
 };
 
 // 由 GET 显示更新作者的表单
-exports.author_update_get = (req, res) => { res.send('未实现：作者更新表单的 GET'); };
+exports.author_update_get = (req, res) => {
+    Author.findById(req.params.id)
+        .then((author) => {
+            if (author == null) {
+                const err = new Error('未找到作者');
+                err.status = 404;
+                return next(err);
+            }
+            res.render('author_form', { title: '更新作者', author: {
+                first_name: author.first_name,
+                family_name: author.family_name,
+                date_of_birth: author.date_of_birth ? author.date_of_birth.toISOString().split('T')[0] : '',
+                date_of_death: author.date_of_death ? author.date_of_death.toISOString().split('T')[0] : '',
+            } });
+        });
+};
+
 
 // 由 POST 处理作者更新操作
-exports.author_update_post = (req, res) => { res.send('未实现：更新作者的 POST'); };
+exports.author_update_post = [
+    // Validate and sanitize fields.
+    body('first_name').trim().isLength({ min: 1 }).escape().withMessage('名字必须填写。'),
+    body('family_name').trim().isLength({ min: 1 }).escape().withMessage('姓氏必须填写。'),
+    body('date_of_birth', '无效的出生日期').optional({ checkFalsy: true }).isISO8601().toDate(),
+    body('date_of_death', '无效的死亡日期').optional({ checkFalsy: true }).isISO8601().toDate(),
+
+    // Process request after validation and sanitization.
+    (req, res, next) => {
+        const errors = validationResult(req);
+
+        if (!errors.isEmpty()) {
+            res.render('author_form', { title: '更新作者', author: req.body, errors: errors.array() });
+            return;
+        } else {
+            const author = new Author({
+                first_name: req.body.first_name,
+                family_name: req.body.family_name,
+                date_of_birth: req.body.date_of_birth,
+                date_of_death: req.body.date_of_death,
+                _id: req.params.id,
+            });
+            Author.findByIdAndUpdate(req.params.id, author, {})
+                .then((theauthor) => {
+                    res.redirect(theauthor.url);
+                });
+        }
+    }
+]
