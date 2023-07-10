@@ -7,7 +7,7 @@ let logger = require('morgan');
 let indexRouter = require('./routes/index');
 let usersRouter = require('./routes/users');
 const catalogRouter = require('./routes/catalog');  // 导入 catalog 路由
-
+const compression = require('compression');
 let app = express();
 
 // 设置 Mongoose 连接
@@ -26,6 +26,7 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(compression());  // 使用压缩中间件
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
