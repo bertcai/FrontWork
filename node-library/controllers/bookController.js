@@ -167,10 +167,51 @@ exports.book_create_post = [
 ]
 
 // 由 GET 显示删除藏书的表单
-exports.book_delete_get = (req, res, next) => { res.send('未实现：藏书删除表单的 GET'); };
+exports.book_delete_get = (req, res, next) => {
+    async.parallel({
+        book: function (callback) {
+            Book.findById(req.params.id).then((book) => {
+                callback(null, book);
+            });
+        },
+        bookinstances: function (callback) {
+            BookInstance.find({ 'book': req.params.id }).then((bookinstances) => {
+                callback(null, bookinstances);
+            });
+        },
+    }, function (err, results) {
+        if (err) { return next(err); }
+        if (results.book == null) {
+            res.redirect('/catalog/books');
+        }
+        res.render('book_delete', { title: '删除藏书', book: results.book, bookinstances: results.bookinstances });
+    });
+};
 
 // 由 POST 处理藏书删除操作
-exports.book_delete_post = (req, res, next) => { res.send('未实现：删除藏书的 POST'); };
+exports.book_delete_post = (req, res, next) => {
+    async.parallel({
+        book: function (callback) {
+            Book.findById(req.body.bookid).then((book) => {
+                callback(null, book);
+            });
+        },
+        bookinstances: function (callback) {
+            BookInstance.find({ 'book': req.body.bookid }).then((bookinstances) => {
+                callback(null, bookinstances);
+            });
+        },
+    }, function (err, results) {
+        if (err) { return next(err); }
+        if (results.bookinstances.length > 0) {
+            res.render('book_delete', { title: '删除藏书', book: results.book, bookinstances: results.bookinstances });
+        } else {
+            Book.findByIdAndRemove(req.body.bookid).then(() => {
+                res.redirect('/catalog/books');
+            });
+        }
+    });
+};
 
 // 由 GET 显示更新藏书的表单
 exports.book_update_get = (req, res, next) => { res.send('未实现：藏书更新表单的 GET'); };

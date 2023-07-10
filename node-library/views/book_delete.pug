@@ -1,0 +1,27 @@
+extends layout
+
+block content
+  h1 图书: #{book.title}
+
+  if bookinstances.length 
+    p #[strong 删除图书之前，必须先删除图书的所有副本。]
+
+    div(style='margin-left:20px;margin-top:20px')
+
+      h4 副本
+
+      dl
+      each book in bookinstances
+        dt
+          a(href=book.url) #{book.imprint}
+        dd #{book.status}
+  else
+    p 你确定要删除这本书吗？
+
+    form(method='POST' action='')
+      div.form-group
+        input#bookid.form-control(type='hidden' name='bookid' required='true', value=book._id )
+
+      button.btn.btn-primary(type='submit') 删除
+
+
