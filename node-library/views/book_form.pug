@@ -6,27 +6,34 @@ block content
   form(method='POST' action='')
     div.form-group
       label(for='title') 标题:
-      input#title.form-control(type='text', placeholder='Name of book' name='title' required='true' value=(undefined===book ? '' : book.title) )
+      input#title.form-control(type='text' placeholder='Name of book' name='title' required='true' value=(undefined===book ? '' : book.title) )
     div.form-group
       label(for='author') 作者:
-      select#author.form-control(type='select', placeholder='Select author' name='author' required='true' )
+      select#author.form-control(type='select' placeholder='Select author' name='author' required='true' )
         for author in authors
           if book
-            option(value=author._id selected=(author._id.toString()==book.author ? 'selected' : false) ) #{author.name}
+            //- Handle GET form, where book.author is an object, and POST form, where it is a string.
+            option(
+              value=author._id
+              selected=(
+                author._id.toString()==book.author._id
+                || author._id.toString()==book.author
+              ) ? 'selected' : false
+            ) #{author.name}
           else
             option(value=author._id) #{author.name}
     div.form-group
       label(for='summary') 简介:
-      input#summary.form-control(type='textarea', placeholder='Summary' name='summary' value=(undefined===book ? '' : book.summary) required='true')
+      input#summary.form-control(type='textarea' placeholder='Summary' name='summary' value=(undefined===book ? '' : book.summary) required='true')
     div.form-group
       label(for='isbn') ISBN:
-      input#isbn.form-control(type='text', placeholder='ISBN13' name='isbn' value=(undefined===book ? '' : book.isbn) required='true')
+      input#isbn.form-control(type='text' placeholder='ISBN13' name='isbn' value=(undefined===book ? '' : book.isbn) required='true')
     div.form-group
       label 种类:
       div
         for genre in genres
           div(style='display: inline; padding-right:10px;')
-            input.checkbox-input(type='checkbox', name='genre', id=genre._id, value=genre._id, checked=genre.checked )
+            input.checkbox-input(type='checkbox' name='genre', id=genre._id, value=genre._id, checked=genre.checked )
             label(for=genre._id) #{genre.name}
     button.btn.btn-primary(type='submit') Submit
 

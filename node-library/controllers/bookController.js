@@ -214,7 +214,103 @@ exports.book_delete_post = (req, res, next) => {
 };
 
 // 由 GET 显示更新藏书的表单
-exports.book_update_get = (req, res, next) => { res.send('未实现：藏书更新表单的 GET'); };
+exports.book_update_get = (req, res, next) => {
+    async.parallel({
+        book: function (callback) {
+            Book.findById(req.params.id).populate('author').populate('genre').then((book) => {
+                callback(null, book);
+            });
+        },
+        authors: function (callback) {
+            Author.find().then((authors) => {
+                callback(null, authors);
+            });
+        },
+        genres: function (callback) {
+            Genre.find().then((genres) => {
+                callback(null, genres);
+            });
+        },
+    }, function (err, results) {
+        if (err) { return next(err); }
+        if (results.book == null) {
+            const err = new Error('未找到该藏书');
+            err.status = 404;
+            return next(err);
+        }
+        // 标记我们已经选择的类型
+        for (let all_g_iter = 0; all_g_iter < results.genres.length; all_g_iter++) {
+            for (let book_g_iter = 0; book_g_iter < results.book.genre.length; book_g_iter++) {
+                if (results.genres[all_g_iter]._id.toString() === results.book.genre[book_g_iter]._id.toString()) {
+                    results.genres[all_g_iter].checked = 'true';
+                }
+            }
+        }
+        res.render('book_form', { title: '更新藏书', authors: results.authors, genres: results.genres, book: results.book });
+    });
+};
 
 // 由 POST 处理藏书更新操作
-exports.book_update_post = (req, res, next) => { res.send('未实现：更新藏书的 POST'); };
+exports.book_update_post = [
+    (req, res, next) => {
+        // 将类型转换为数组
+        if (!(req.body.genre instanceof Array)) {
+            if (typeof req.body.genre === 'undefined') req.body.genre = [];
+            else req.body.genre = new Array(req.body.genre);
+        }
+        next()
+    },
+
+    // 校验和处理字段
+    body('title', '标题必须填写。').trim().isLength({ min: 1 }).escape(),
+    body('author', '作者必须填写。').trim().isLength({ min: 1 }).escape(),
+    body('summary', '摘要必须填写。').trim().isLength({ min: 1 }).escape(),
+    body('isbn', 'ISBN 必须填写').trim().isLength({ min: 1 }).escape(),
+    body('genre.*').escape(),
+
+    // 处理请求
+    (req, res, next) => {
+        const errors = validationResult(req);
+
+        // 创建一个 Book 
+        const book = new Book(
+            {
+                title: req.body.title,
+                author: req.body.author,
+                summary: req.body.summary,
+                isbn: req.body.isbn,
+                genre: (typeof req.body.genre === 'undefined') ? [] : req.body.genre,
+                _id: req.params.id, // 这是必需的，否则新建的藏书将被分配一个新的 ID
+            }
+        );
+        if (!errors.isEmpty()) {
+            async.parallel({
+                authors: function (callback) {
+                    Author.find().then((authors) => {
+                        callback(null, authors);
+                    });
+                },
+                genres: function (callback) {
+                    Genre.find().then((genres) => {
+                        callback(null, genres);
+                    });
+                }
+            }, function (err, results) {
+                if (err) { return next(err); }
+                // 标记我们已经选择的类型
+                for (let i = 0; i < results.genres.length; i++) {
+                    if (book.genre.indexOf(results.genres[i]._id) > -1) {
+                        results.genres[i].checked = 'true';
+                    }
+                }
+                res.render('book_form', { title: '更新藏书', authors: results.authors, genres: results.genres, book: book, errors: errors.array() });
+            });
+        } else {
+            // 数据有效，更新藏书
+            Book.findByIdAndUpdate(req.params.id, book, {}).then((thebook) => {
+                // 更新成功，重定向到藏书详情页面
+                res.redirect(thebook.url);
+            });
+        }
+    }
+]
