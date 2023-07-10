@@ -80,10 +80,58 @@ exports.genre_create_post = [
 ]
 
 // 由 GET 显示删除藏书类别的表单
-exports.genre_delete_get = (req, res, next) => { res.send('未实现：藏书类别删除表单的 GET'); }
+exports.genre_delete_get = (req, res, next) => { 
+    async.parallel({
+        genre: function (callback) {
+            Genre.findById(req.params.id)
+                .then((genre) => {
+                    callback(null, genre);
+                });
+        },
+        genre_books: function (callback) {
+            Book.find({ 'genre': req.params.id })
+                .then((books) => {
+                    callback(null, books);
+                });
+        }
+    }, function (err, results) {
+        if (err) { return next(err); }
+        if (results.genre == null) {
+            res.redirect('/catalog/genres');
+        }
+        res.render('genre_delete', { title: '删除藏书类别', genre: results.genre, genre_books: results.genre_books });
+    }
+    );
+}
 
 // 由 POST 处理藏书类别删除操作
-exports.genre_delete_post = (req, res, next) => { res.send('未实现：删除藏书类别的 POST'); }
+exports.genre_delete_post = (req, res, next) => { 
+    async.parallel({
+        genre: function (callback) {
+            Genre.findById(req.body.genreid)
+                .then((genre) => {
+                    callback(null, genre);
+                });
+        },
+        genre_books: function (callback) {
+            Book.find({ 'genre': req.body.genreid })
+                .then((books) => {
+                    callback(null, books);
+                });
+        }
+    }, function (err, results) {
+        if (err) { return next(err); }
+        if (results.genre_books.length > 0) {
+            res.render('genre_delete', { title: '删除藏书类别', genre: results.genre, genre_books: results.genre_books });
+            return;
+        } else {
+            Genre.findByIdAndRemove(req.body.genreid)
+                .then(() => {
+                    res.redirect('/catalog/genres');
+                });
+        }
+    });
+}
 
 // 由 GET 显示更新藏书类别的表单
 exports.genre_update_get = (req, res, next) => { res.send('未实现：藏书类别更新表单的 GET'); }
