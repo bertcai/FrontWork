@@ -13,7 +13,7 @@ let app = express();
 
 // 设置 Mongoose 连接
 const mongoose = require('mongoose');
-const mongoDB = require('./secret').mongoDB;
+const mongoDB = process.env.MONGODB_URI
 mongoose.connect(mongoDB, { useNewUrlParser: true , useUnifiedTopology: true});
 mongoose.Promise = global.Promise;
 const db = mongoose.connection;
