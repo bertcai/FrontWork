@@ -80,7 +80,7 @@ exports.genre_create_post = [
 ]
 
 // 由 GET 显示删除藏书类别的表单
-exports.genre_delete_get = (req, res, next) => { 
+exports.genre_delete_get = (req, res, next) => {
     async.parallel({
         genre: function (callback) {
             Genre.findById(req.params.id)
@@ -105,7 +105,7 @@ exports.genre_delete_get = (req, res, next) => {
 }
 
 // 由 POST 处理藏书类别删除操作
-exports.genre_delete_post = (req, res, next) => { 
+exports.genre_delete_post = (req, res, next) => {
     async.parallel({
         genre: function (callback) {
             Genre.findById(req.body.genreid)
@@ -134,7 +134,41 @@ exports.genre_delete_post = (req, res, next) => {
 }
 
 // 由 GET 显示更新藏书类别的表单
-exports.genre_update_get = (req, res, next) => { res.send('未实现：藏书类别更新表单的 GET'); }
+exports.genre_update_get = (req, res, next) => {
+    Genre.findById(req.params.id)
+        .then((genre) => {
+            if (genre == null) {
+                const err = new Error('未找到藏书类别');
+                err.status = 404;
+                return next(err);
+            }
+            res.render('genre_form', { title: '更新藏书类别', genre: genre });
+        });
+}
 
 // 由 POST 处理藏书类别更新操作
-exports.genre_update_post = (req, res, next) => { res.send('未实现：更新藏书类别的 POST'); }
+exports.genre_update_post = [
+    // 对 name 字段进行验证
+    body('name', '藏书类别名不能为空').isLength({ min: 1 }).trim(),
+
+    // 对 name 字段进行去除首尾空格及转义
+    body('name').trim().escape(),
+
+    // 处理请求
+    (req, res, next) => {
+        const errors = validationResult(req);
+
+        // 创建 Genre 对象
+        const genre = new Genre({ name: req.body.name, _id: req.params.id });
+
+        if (!errors.isEmpty()) {
+            res.render('genre_form', { title: '更新藏书类别', genre: genre, errors: errors.array() });
+            return;
+        } else {
+            Genre.findByIdAndUpdate(req.params.id, genre, {})
+                .then((theGenre) => {
+                    res.redirect(theGenre.url);
+                });
+        }
+    }
+]
