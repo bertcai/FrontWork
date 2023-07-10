@@ -8,6 +8,7 @@ let indexRouter = require('./routes/index');
 let usersRouter = require('./routes/users');
 const catalogRouter = require('./routes/catalog');  // 导入 catalog 路由
 const compression = require('compression');
+const helmet = require('helmet');
 let app = express();
 
 // 设置 Mongoose 连接
@@ -22,6 +23,7 @@ db.on('error', console.error.bind(console, 'MongoDB 连接错误：'));
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
+app.use(helmet());  // 使用 helmet 中间件
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
