@@ -71,10 +71,24 @@ exports.bookinstance_create_post = [
 ]
 
 // 由 GET 显示删除藏书副本的表单
-exports.bookinstance_delete_get = (req, res, next) => { res.send('未实现：藏书副本删除表单的 GET'); };
+exports.bookinstance_delete_get = (req, res, next) => {
+    BookInstance.findById(req.params.id)
+        .populate('book')
+        .then((bookinstance) => {
+            if (bookinstance == null) {
+                res.redirect('/catalog/bookinstances');
+            }
+            res.render('bookinstance_delete', { title: '删除藏书副本', bookinstance: bookinstance });
+        });
+};
 
 // 由 POST 处理藏书副本删除操作
-exports.bookinstance_delete_post = (req, res, next) => { res.send('未实现：删除藏书副本的 POST'); };
+exports.bookinstance_delete_post = (req, res, next) => {
+    BookInstance.findByIdAndRemove(req.body.bookinstanceid)
+        .then(() => {
+            res.redirect('/catalog/bookinstances');
+        })
+};
 
 // 由 GET 显示更新藏书副本的表单
 exports.bookinstance_update_get = (req, res, next) => { res.send('未实现：藏书副本更新表单的 GET'); };

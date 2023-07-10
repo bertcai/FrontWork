@@ -1,0 +1,12 @@
+extends layout 
+
+block content 
+  h1 副本ID: #{bookinstance._id}
+  p 你确定要删除这个图书副本吗？
+
+  form(method='POST' action='')
+    div.form-group
+      input#bookid.form-control(type='hidden' name='bookinstanceid' required='true', value=bookinstance._id )
+
+    button.btn.btn-primary(type='submit') 删除
+
