@@ -1,0 +1,28 @@
+extends layout
+
+block content
+  h1 #{title}: #{author.name}
+  p= author.lifespan
+
+  if author_books.length
+
+    p #[strong 删除作者之前，必须先删除作者的所有书籍。]
+
+    div(style='margin-left:20px;margin-top:20px')
+
+      h4 图书
+
+      dl
+      each book in author_books
+        dt
+          a(href=book.url) #{book.title}
+        dd #{book.summary}
+
+  else
+    p 你确定要删除这个作者吗？
+
+    form(method='POST' action='')
+      div.form-group
+        input#authorid.form-control(type='hidden',name='authorid', required='true', value=author._id )
+
+      button.btn.btn-primary(type='submit') 删除

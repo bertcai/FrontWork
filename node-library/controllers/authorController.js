@@ -79,10 +79,58 @@ exports.author_create_post = [
 ]
 
 // 由 GET 显示删除作者的表单
-exports.author_delete_get = (req, res) => { res.send('未实现：作者删除表单的 GET'); };
+exports.author_delete_get = (req, res) => {
+    async.parallel({
+        author: function (callback) {
+            Author.findById(req.params.id)
+                .then((author) => {
+                    callback(null, author);
+                });
+        },
+        authors_books: function (callback) {
+            Book.find({ 'author': req.params.id }, 'title summary')
+                .then((books) => {
+                    callback(null, books);
+                });
+        },
+    }, function (err, results) {
+        if (err) { return next(err); }
+        if (results.author == null) {
+            res.redirect('/catalog/authors');
+        }
+        res.render('author_delete', { title: '删除作者', author: results.author, author_books: results.authors_books });
+    }
+    );
+};
 
 // 由 POST 处理作者删除操作
-exports.author_delete_post = (req, res) => { res.send('未实现：删除作者的 POST'); };
+exports.author_delete_post = (req, res) => {
+    async.parallel({
+        author: function (callback) {
+            Author.findById(req.body.authorid)
+                .then((author) => {
+                    callback(null, author);
+                });
+        },
+        authors_books: function (callback) {
+            Book.find({ 'author': req.body.authorid }, 'title summary')
+                .then((books) => {
+                    callback(null, books);
+                });
+        },
+    }, function (err, results) {
+        if (err) { return next(err); }
+        if (results.authors_books.length > 0) {
+            res.render('author_delete', { title: '删除作者', author: results.author, author_books: results.authors_books });
+            return;
+        } else {
+            Author.findByIdAndRemove(req.body.authorid)
+                .then(() => {
+                    res.redirect('/catalog/authors');
+                });
+        }
+    });
+};
 
 // 由 GET 显示更新作者的表单
 exports.author_update_get = (req, res) => { res.send('未实现：作者更新表单的 GET'); };
