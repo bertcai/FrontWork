@@ -8,6 +8,7 @@ let app = require('../app');
 let debug = require('debug')('node-library:server');
 let http = require('http');
 const https = require('https');
+const fs = require('fs');
 
 /**
  * Get port from environment and store in Express.
