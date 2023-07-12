@@ -30,8 +30,8 @@ let server = http.createServer(app);
  */
 
 const options = {
-  key: fs.readFileSync('/home/ubuntu/moecai.com-key/moecai.com.key'),
-  cert: fs.readFileSync('/home/ubuntu/moecai.com-key/moecai.com_bundle.crt')
+  key: fs.readFileSync('../moecai.com-key/moecai.com.key'),
+  cert: fs.readFileSync('../moecai.com-key/moecai.com_bundle.crt')
 };
 
 let secureServer = https.createServer(options, app);
