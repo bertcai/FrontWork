@@ -93,3 +93,5 @@ node-library/moecai.com/moecai.com_bundle.crt
 node-library/moecai.com/moecai.com_bundle.pem
 node-library/moecai.com/moecai.com.csr
 node-library/moecai.com/moecai.com.key
+nest/nest-test/uploads/
+nest/nest-test/.vscode/
