@@ -1,9 +1,43 @@
-import { Injectable } from '@nestjs/common';
+import {
+  BeforeApplicationShutdown,
+  Injectable,
+  OnApplicationBootstrap,
+  OnApplicationShutdown,
+  OnModuleDestroy,
+  OnModuleInit,
+} from '@nestjs/common';
 import { CreateAaaDto } from './dto/create-aaa.dto';
 import { UpdateAaaDto } from './dto/update-aaa.dto';
 
 @Injectable()
-export class AaaService {
+export class AaaService
+  implements
+    OnModuleInit,
+    OnApplicationBootstrap,
+    OnModuleDestroy,
+    BeforeApplicationShutdown,
+    OnApplicationShutdown
+{
+  onModuleInit() {
+    console.log('AaaService onModuleInit');
+  }
+
+  onApplicationBootstrap() {
+    console.log('AaaService onApplicationBootstrap');
+  }
+
+  onModuleDestroy() {
+    console.log('AaaService onModuleDestroy');
+  }
+
+  beforeApplicationShutdown(signal?: string) {
+    console.log('AaaService beforeApplicationShutdown', signal);
+  }
+
+  onApplicationShutdown() {
+    console.log('AaaService onApplicationShutdown');
+  }
+
   create(createAaaDto: CreateAaaDto) {
     return 'This action adds a new aaa';
   }
