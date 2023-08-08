@@ -10,11 +10,14 @@ import {
   UseInterceptors,
   UploadedFiles,
   Inject,
+  UseFilters,
 } from '@nestjs/common';
 import { PersonService } from './person.service';
 import { CreatePersonDto } from './dto/create-person.dto';
 import { UpdatePersonDto } from './dto/update-person.dto';
 import { AnyFilesInterceptor } from '@nestjs/platform-express';
+import { CccFilter } from 'src/ccc.filter';
+import { CccException } from 'src/CccException';
 
 @Controller('api/person')
 export class PersonController {
@@ -45,11 +48,13 @@ export class PersonController {
   }
 
   @Get()
+  @UseFilters(CccFilter)
   findAll() {
     console.log(this.API_KEY);
     console.log(this.person);
     console.log(this.person2);
     console.log(this.person3);
+    throw new CccException('aaa', 'bbb');
     return this.personService.findAll();
   }
 

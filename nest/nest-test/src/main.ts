@@ -9,8 +9,8 @@ async function bootstrap() {
   await app.listen(3000);
 
   // 3s 后关闭服务
-  setTimeout(() => {
-    app.close();
-  }, 3000);
+  // setTimeout(() => {
+  //   app.close();
+  // }, 3000);
 }
 bootstrap();
