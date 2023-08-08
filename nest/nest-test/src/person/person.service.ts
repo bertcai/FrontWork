@@ -36,4 +36,9 @@ export class PersonService {
   remove(id: number) {
     return `This action removes a #${id} person`;
   }
+
+  // 以下为自定义方法
+  greeting(name: string) {
+    return `Hello ${name}`;
+  }
 }
