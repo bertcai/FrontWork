@@ -11,6 +11,7 @@ import {
   UploadedFiles,
   Inject,
   UseFilters,
+  Headers,
 } from '@nestjs/common';
 import { PersonService } from './person.service';
 import { CreatePersonDto } from './dto/create-person.dto';
@@ -18,6 +19,7 @@ import { UpdatePersonDto } from './dto/update-person.dto';
 import { AnyFilesInterceptor } from '@nestjs/platform-express';
 import { CccFilter } from 'src/ccc.filter';
 import { CccException } from 'src/CccException';
+import { MyHeader } from 'src/my-header.decorator';
 
 @Controller('api/person')
 export class PersonController {
@@ -49,12 +51,17 @@ export class PersonController {
 
   @Get()
   @UseFilters(CccFilter)
-  findAll() {
+  findAll(
+    @MyHeader('accept') myAccept: string,
+    @Headers('accept') accept: string,
+  ) {
     console.log(this.API_KEY);
     console.log(this.person);
     console.log(this.person2);
     console.log(this.person3);
-    throw new CccException('aaa', 'bbb');
+    console.log('myAccept', myAccept);
+    console.log('accept', accept);
+    // throw new CccException('aaa', 'bbb');
     return this.personService.findAll();
   }
 
